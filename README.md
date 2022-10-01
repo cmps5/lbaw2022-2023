@@ -1,6 +1,6 @@
 # Eat&Peas
 
-Repository containing **lbaw22134**'s group project code and [documentation](https://git.fe.up.pt/lbaw/lbaw2223/lbaw22134/-/wikis/Home), about a **Collaborative Q&A** platform called **Eat&Peas** (theme 5) for the LBAW subject (2022/2023).
+Repository containing **lbaw22134**'s group project code and [documentation](https://git.fe.up.pt/lbaw/lbaw2223/lbaw22134/-/wikis/Home), about a cooking **Collaborative Q&A** platform called **Eat&Peas** for the LBAW subject (2022/2023).
 
 ###### If needed, email us:
 [Carlos Santos](mailto:up201607406@edu.fc.up.pt)<br>
