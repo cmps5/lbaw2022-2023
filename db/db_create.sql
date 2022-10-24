@@ -1,3 +1,4 @@
+
 CREATE SCHEMA IF NOT EXISTS lbaw22134;
 -- SET search_path TO lbaw22134;
 
@@ -8,6 +9,7 @@ DROP TABLE IF EXISTS report;
 
 -- user private contents
 DROP TABLE IF EXISTS user_follow_tag;
+
 DROP TABLE IF EXISTS follow;
 DROP TABLE IF EXISTS "message";
 DROP TABLE IF EXISTS "search";
@@ -27,6 +29,7 @@ DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS moderator;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS "admin";
+DROP TABLE IF EXISTS post;
 
 DROP TYPE IF EXISTS type_of_media;
 CREATE TYPE type_of_media AS ENUM ('text', 'image', 'video','*URL*'); 
@@ -64,6 +67,7 @@ CREATE TABLE "user"
     CONSTRAINT birth_date_ck CHECK (birth_date < current_date)
 );
 
+
 CREATE TABLE moderator
 (
     moderator_id INTEGER PRIMARY KEY REFERENCES "user" (user_id) 
@@ -91,18 +95,19 @@ CREATE TABLE post
 
 CREATE TABLE tag
 (
-    "name" TEXT PRIMARY KEY, 
-    description TEXT
+    "name" TEXT,
+    description TEXT,
+    tag_id SERIAL PRIMARY KEY
 ); 
 
 CREATE TABLE post_tag
 (
     post_id INTEGER REFERENCES post (post_id) 
     ON UPDATE CASCADE ON DELETE CASCADE,
-    tag_name TEXT REFERENCES tag ("name") 
+    tag_id INTEGER REFERENCES tag ("tag_id")
     ON UPDATE CASCADE ON DELETE CASCADE,
 
-    PRIMARY KEY (post_id, tag_name)
+    PRIMARY KEY (post_id, tag_id)
 
 );
 
@@ -217,9 +222,9 @@ CREATE TABLE user_follow_tag
 (
     user_id SERIAL REFERENCES "user" (user_id) 
     ON UPDATE CASCADE ON DELETE CASCADE,
-    tag_name TEXT REFERENCES tag ("name") 
+    tag_id INTEGER REFERENCES tag ("tag_id")
     ON UPDATE CASCADE ON DELETE CASCADE,
-    PRIMARY KEY (user_id, tag_name)
+    PRIMARY KEY (user_id, tag_id)
 );
 
 -- private contents
