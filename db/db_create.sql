@@ -1,4 +1,3 @@
-
 CREATE SCHEMA IF NOT EXISTS lbaw22134;
 -- SET search_path TO lbaw22134;
 
@@ -29,7 +28,7 @@ DROP TABLE IF EXISTS moderator;
 DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS "admin";
 
-DROP TYPE type_of_media;
+DROP TYPE IF EXISTS type_of_media;
 CREATE TYPE type_of_media AS ENUM ('text', 'image', 'video','*URL*'); 
 DROP TYPE IF EXISTS post_status;
 CREATE TYPE post_status AS ENUM ('open', 'closed', 'hidden','deleted'); 
