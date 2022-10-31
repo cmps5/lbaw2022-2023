@@ -95,7 +95,7 @@ CREATE TABLE post
 
 CREATE TABLE tag
 (
-    "name" TEXT,
+    "name" TEXT UNIQUE,
     description TEXT,
     tag_id SERIAL PRIMARY KEY
 ); 
