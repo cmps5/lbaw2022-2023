@@ -12,7 +12,7 @@ class User extends Authenticatable
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'account';
+    protected $table = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +42,11 @@ class User extends Authenticatable
     public function User()
     {
         return $this->hasOne(User::class, 'id');
+    }
+
+    public function IsMod()
+    {
+        return $this->hasOne(Moderador::class, 'id');
     }
 
     public function BannedBy()

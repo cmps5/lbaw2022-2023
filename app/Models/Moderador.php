@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Authenticatable
+class Moderador extends Authenticatable
 {
     use Notifiable;
 
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'admin';
+    protected $table = 'moderador';
 
     /**
      * The attributes that are mass assignable.
@@ -20,21 +20,18 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password'
+        "moderator_id", "assigned_by"
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password'
-    ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function client()
+    public function User()
     {
-        return $this->hasOne(Admin::class, 'id');
+        return $this->hasOne(User::class, 'moderator_id');
+    }
+
+    public function AssignedBy()
+    {
+        return $this->hasOne(Admin::class, 'assigned_by');
     }
 
 }
