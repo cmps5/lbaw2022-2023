@@ -32,7 +32,7 @@ class Admin extends Authenticatable
         'password'
     ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function client()
+    public function admin()
     {
         return $this->hasOne(Admin::class, 'id');
     }

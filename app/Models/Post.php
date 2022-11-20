@@ -11,7 +11,7 @@ class Follow extends Model
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'comment';
+    protected $table = 'post';
 
     protected $fillable = [
         "title",

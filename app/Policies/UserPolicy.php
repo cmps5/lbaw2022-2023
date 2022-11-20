@@ -4,8 +4,8 @@
 namespace App\Policies;
 
 
-use App\Models\Account;
-use App\Models\Client;
+use App\Models\User;
+use App\Models\Admin;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
