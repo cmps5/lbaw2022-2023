@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Follow extends Model
+class Post extends Model
 {
 
     // Don't add create and update timestamps in database.
