@@ -1,0 +1,890 @@
+openapi: 3.0.0
+
+info:
+  version: '1.0'
+  title: 'LBAW Eat&Peas Web API'
+  description: 'Web Resources Specification (A7) for Eat&Peas'
+
+servers:
+  - url: http://lbaw.fe.up.pt
+    description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2223/lbaw22134/
+
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Messages'
+  - name: 'M03: Home page'
+  - name: 'M04: Post, comments and tags'
+  - name: 'M05: Search'
+  - name: 'M06: Report'
+  - name: 'M07: Administration and static pages'
+
+paths:
+
+  /login:
+    get:
+      operationId: R101
+      summary: 'R101: Login Form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show Log-in UI'
+    post:
+      operationId: R102
+      summary: 'R102: Login Action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect home.'
+                  value: '/'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+  /logout:
+    post:
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR, MOD, ADM'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect home.'
+                  value: '/'
+
+  /register:
+    get:
+      operationId: R104
+      summary: 'R104: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show Sign-Up UI'
+
+    post:
+      operationId: R105
+      summary: 'R105: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+                profile_picture:
+                  type: string
+                  format: binary
+                bio:
+                  type: string
+              required:
+                - name
+                - username
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{user}'
+
+  /users/{user}:
+    get:
+      operationId: R106
+      summary: 'R106: View user profile'
+      description: 'Show the individual user profile. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Ok. Show User Profile UI'
+
+    delete:
+      operationId: R110
+      summary: 'R110: Delete my account'
+      description: 'Delete my account. Access: OWN.'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok.'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+  /users/{user}/delete:
+    delete:
+      operationId: R705
+      summary: 'R705: Ban an user'
+      description: 'Ban an user. Access: ADM.'
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '200':
+          description: 'Ok.'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+  /users/{user}/edit:
+    get:
+      operationId: R107
+      summary: 'R107: View edit profile form'
+      description: 'View edit profile form. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show Edit Profile UI'
+
+    patch:
+      operationId: R108
+      summary: 'R108: Edit user profile'
+      description: 'Edit the individual user profile. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+                profile_picture:
+                  type: string
+                  format: binary
+                bio:
+                  type: string
+      responses:
+        '302':
+          description: 'Redirect after processing the user information edited.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful edition of user profile. Redirect to user profile.'
+                  value: '/users/{user}'
+                302Failure:
+                  description: 'Failed edition of user profile. Redirect to user profile.'
+                  value: '/users/{user}'
+                401Success:
+                  description: 'Unauthorized.'
+                  value: '/'
+
+  /users/{user}/saved_posts:
+    get:
+      operationId: R109
+      summary: 'R109: See saved posts'
+      description: 'See user saved posts. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'OK. Show saved posts.'
+        '401':
+          description: 'Unauthorized access.'
+
+  /top:
+    get:
+      operationId: R301
+      summary: 'R601: View top posts'
+      description: 'View top posts. Access: PUB'
+      tags:
+        - 'M03: Home page'
+      responses:
+        '200':
+          description: 'Ok. Show top posts'
+        '404':
+          description: 'Not Found.'
+
+  /recent:
+    get:
+      operationId: R302
+      summary: 'R601: View recent posts'
+      description: 'View recent posts. Access: PUB'
+      tags:
+        - 'M03: Home page'
+      responses:
+        '200':
+          description: 'Ok. Show recent posts'
+        '404':
+          description: 'Not Found.'
+
+  /reports/{report_id}:
+    get:
+      operationId: R601
+      summary: 'R601: View a specific report'
+      description: 'View specific report . Access: MOD'
+      tags:
+        - 'M06: Report'
+      responses:
+        '200':
+          description: 'Ok. Show Report UI'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+  /reports:
+    get:
+      operationId: R602
+      summary: 'R602: View Reports page'
+      description: 'View Reports page. Access: MOD, ADM'
+
+      tags:
+        - 'M06: Report'
+      responses:
+        '200':
+          description: 'Ok. Show Reports UI'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+  /reports/create:
+    get:
+      operationId: R603
+      summary: 'R603: View creation report form'
+      description: 'View creation report form. Access: MOD, ADM'
+
+      tags:
+        - 'M06: Report'
+      responses:
+        '200':
+          description: 'Ok. Show Reports Form UI'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+    post:
+      operationId: R604
+      summary: 'R604: Add a new report'
+      description: 'Add a new report. Access: USR'
+
+      tags:
+        - 'M06: Report'
+      responses:
+        '302':
+          description: 'Redirect after creating report .'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful report creation. Redirect home.'
+                  value: '/'
+                302Failure:
+                  description: 'Failed creating a report. Redirect home.'
+                  value: '/'
+                401Success:
+                  description: 'Unauthorized'
+                  value: '/'
+
+
+  /posts/{post}:
+    get:
+      operationId: R400
+      summary: 'R400: View post'
+      description: 'Provide post and corresponding comments. Access: PUB'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show post and comments'
+        '404':
+          description: 'Post not found.'
+    delete:
+      operationId: R406
+      summary: 'R406: Delete post'
+      description: 'Delete post. Access: OWN.'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok.'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+
+  /posts/create:
+    get:
+      operationId: R401
+      summary: 'R401: View create post form.'
+      description: 'Provide post creation form. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show post creation form'
+
+    post:
+      operationId: R402
+      summary: 'R402: Create post action'
+      description: 'Processes post creation form submission. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                media:
+                  type: binary
+                type_of_media:
+                  type: string
+              required:
+                - title
+                - content
+      responses:
+        '201':
+          description: 'Redirect after processing the new post information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: 'Successful post creation. Redirect to post.'
+                  value: '/post/{post_id}'
+        '400':
+          description: 'Failed post creation.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                400:
+                  description: 'Failed post creation. Redirect to post creation form.'
+                  value: '/create_post'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /posts/{post}/edit:
+    get:
+      operationId: R403
+      summary: 'R403: Edit post'
+      description: 'Provide edit post form. Access: OWN'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show post edition form'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R404
+      summary: 'R404: Edit post action'
+      description: 'Processes post edition form submission. Access: OWN'
+      tags:
+        - 'M04: Post, comments and tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                media:
+                  type: binary
+                type_of_media:
+                  type: string
+      responses:
+        '202':
+          description: 'Redirec after post edit.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                202:
+                  description: 'Post edited successfully. Show post.'
+                  value: '/post/{post_id}'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /posts/{tag}:
+    get:
+      operationId: R405
+      summary: 'R405: See posts related to a tag'
+      description: 'See all posts that are tagged with that tag. Access: PUB'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'OK. Show posts.'
+
+  /tags:
+    get:
+      operationId: R406
+      summary: 'R406: See all tags'
+      description: 'See all tags. Access: PUB'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'OK. Show tags.'
+
+  /tags/create:
+    get:
+      operationId: R407
+      summary: 'R407: Get create tag form'
+      description: 'See tag creation form. Access: MOD'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'OK. Show tag creation form.'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R407
+      summary: 'R407: Create tag'
+      description: 'Processes the tag creation form submission. Access: MOD'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+              required:
+                - name
+                - description
+
+      responses:
+        '200':
+          description: 'Redirect after processing the tag creation form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: 'Successful tag creation. Redirect to all tags.'
+                  value: '/tags'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /post/{post}/reply:
+    get:
+      operationId: R412
+      summary: 'R412: Reply to a post'
+      description: 'Provide comment creation form for this post. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show comment edition form'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R413
+      summary: 'R413: reply action'
+      description: 'Processes comment creation form submission. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                required:
+                  - content
+      responses:
+        '202':
+          description: 'Comment replied successfully. Show post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: 'Successful comment. Redirect to post.'
+                  value: '/post/{post_id}'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /post/{post}/{comment}/edit:
+    get:
+      operationId: R408
+      summary: 'R408: Edit comment'
+      description: 'Provide edit comment form. Access: OWN'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show comment edition form'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R409
+      summary: 'R409: Edit comment action'
+      description: 'Processes comment edition form submission. Access: OWN'
+      tags:
+        - 'M04: Post, comments and tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '202':
+          description: 'Post edited successfully. Show post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: 'Successful comment edition. Redirect to post.'
+                  value: '/post/{post_id}'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+    delete:
+      operationId: R405
+      summary: 'R405: Delete comment'
+      description: 'Delete comment. Access: OWN.'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok.'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
+
+  /{comment}/reply:
+    get:
+      operationId: R410
+      summary: 'R410: reply to a comment'
+      description: 'Provide comment creation form. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      responses:
+        '200':
+          description: 'Ok. Show comment edition form'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R411
+      summary: 'R411: reply action'
+      description: 'Processes comment creation form submission. Access: USR'
+      tags:
+        - 'M04: Post, comments and tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                required:
+                  { content }
+      responses:
+        '202':
+          description: 'Comment replied successfully. Show post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: 'Successful comment. Redirect to post.'
+                  value: '/post/{post_id}'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /searches:
+    get:
+      operationId: R501
+      summary: 'R501: View all users and posts'
+      description: 'View all users and posts. Access: PUB'
+      tags:
+        - 'M05: Search'
+      responses:
+        '200':
+          description: 'Ok. Show all users and posts'
+        '401':
+          description: 'Unauthorized access.'
+
+    post:
+      operationId: R503
+      summary: "R503: Save user's search"
+      description: "Save user's search. Access: USR"
+      tags:
+        - 'M05: Search'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                required:
+                  { content }
+
+      responses:
+        '202':
+          description: "Saved user's search."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                200:
+                  description: "Successful user's search save. Redirect to searches."
+                  value: '/searches/{search}'
+        '401':
+          description: 'Unauthorized access.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                401:
+                  description: 'Unauthorized access.'
+                  value: '/'
+
+  /searches/{search}:
+    get:
+      operationId: R502
+      summary: 'R502: View search results'
+      description: 'View search results. Access: OWN'
+      tags:
+        - 'M05: Search'
+      responses:
+        '200':
+          description: 'Ok. Show all search results'
+        '401':
+          description: 'Unauthorized access.'
+
+  /help:
+    get:
+      operationId: R701
+      summary: 'R701: View Help page'
+      description: 'View Help page. Access: PUB.'
+
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Show Help UI'
+
+  /about-us:
+    get:
+      operationId: R702
+      summary: 'R702: View About Us page'
+      description: 'View About Us page. Access: PUB.'
+
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Show About Us UI'
+
+  /contacts:
+    get:
+      operationId: R703
+      summary: 'R703: View Contacts page'
+      description: 'View About Us page. Access: PUB.'
+
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Show Contacts UI'
+
+  /features:
+    get:
+      operationId: R704
+      summary: 'R704: View Main Features page'
+      description: 'View Main Features page. Access: PUB.'
+
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '200':
+          description: 'Ok. Show Main Features UI'
+
+  /moderators:
+    post:
+      operationId: R705
+      summary: 'R705: Add a new moderator'
+      description: 'Add a new moderator. Access: ADM.'
+      tags:
+        - 'M07: Administration Page and Static Pages'
+      responses:
+        '201':
+          description: 'Created.'
+        '401':
+          description: 'Unauthorized.'
+        '403':
+          description: 'Forbidden.'
+        '404':
+          description: 'Not Found.'
