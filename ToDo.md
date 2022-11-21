@@ -4,6 +4,7 @@
 -[ ] Block
 -[ ] Report
 -[ ] SavePost
+-[ ] Search
 -[ ] Tag
 -[ ] UserFollowTag
 -[ ] UserVoteComment
