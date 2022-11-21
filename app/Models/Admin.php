@@ -34,7 +34,7 @@ class Admin extends Authenticatable
 
     public function admin()
     {
-        return $this->hasOne(Admin::class, 'id');
+        return $this->belongsTo(Admin::class, 'id');
     }
 
 }

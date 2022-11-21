@@ -46,12 +46,12 @@ class User extends Authenticatable
 
     public function IsMod()
     {
-        return $this->hasOne(Moderador::class, 'id');
+        return $this->hasOne(Moderator::class, 'id');
     }
 
     public function BannedBy()
     {
-        return $this->hasOne(Admin::class, 'banned_by');
+        return $this->belongsTo(Admin::class, 'banned_by');
     }
 
 }

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Moderador extends Authenticatable
+class Moderator extends Authenticatable
 {
     use Notifiable;
 
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'moderador';
+    protected $table = 'moderator';
 
     /**
      * The attributes that are mass assignable.
@@ -26,12 +26,12 @@ class Moderador extends Authenticatable
 
     public function User()
     {
-        return $this->hasOne(User::class, 'moderator_id');
+        return $this->belongsTo(User::class, 'moderator_id');
     }
 
     public function AssignedBy()
     {
-        return $this->hasOne(Admin::class, 'assigned_by');
+        return $this->belongsTo(Admin::class, 'assigned_by');
     }
 
 }
