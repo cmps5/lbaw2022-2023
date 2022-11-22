@@ -13,7 +13,7 @@ class UserVotePost extends Model
     protected $table = 'user_vote_post';
 
     protected $fillable = [
-        "user_id", "tag_id"
+        "user_id", "post_id", "type_of_vote"
     ];
 
 
@@ -24,6 +24,6 @@ class UserVotePost extends Model
 
     public function tag()
     {
-        return $this->belongsTo(Tag::class, 'tag_id');
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }
