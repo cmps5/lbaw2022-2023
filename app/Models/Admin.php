@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
 
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'user';
+    protected $table = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -20,14 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        "email",
-        "username",
-        "name",
-        "password",
-        "profile_picture",
-        "bio" ,
-        "birth_date",
-        "banned_by"
+        'username', 'password'
     ];
 
     /**
@@ -39,19 +32,6 @@ class User extends Authenticatable
         'password'
     ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id');
-    }
 
-    public function isMod()
-    {
-        return $this->hasOne(Moderator::class, 'id');
-    }
-
-    public function bannedBy()
-    {
-        return $this->belongsTo(Admin::class, 'banned_by');
-    }
 
 }
