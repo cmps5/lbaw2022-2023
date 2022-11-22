@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Comment extends Model
 {
     // Don't add create and update timestamps in database.
@@ -14,12 +16,12 @@ class Comment extends Model
     ];
 
 
-    public function Post()
+    public function post()
     {
         return $this->belongsTo(Post::class, 'post_id');
     }
 
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -28,5 +30,12 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, "parent_comment");
     }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, "comment");
+    }
+
+    //UPVoteMissing
 
 }

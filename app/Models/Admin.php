@@ -32,9 +32,6 @@ class Admin extends Authenticatable
         'password'
     ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class, 'id');
-    }
+
 
 }

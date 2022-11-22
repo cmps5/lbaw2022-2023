@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Moderator extends Authenticatable
+class Moderator  extends Model
 {
     use Notifiable;
 
@@ -24,12 +24,12 @@ class Moderator extends Authenticatable
     ];
 
 
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class, 'moderator_id');
     }
 
-    public function AssignedBy()
+    public function assignedBy()
     {
         return $this->belongsTo(Admin::class, 'assigned_by');
     }

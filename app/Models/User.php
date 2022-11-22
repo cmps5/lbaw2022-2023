@@ -39,17 +39,17 @@ class User extends Authenticatable
         'password'
     ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function User()
+    public function user()
     {
         return $this->hasOne(User::class, 'id');
     }
 
-    public function IsMod()
+    public function isMod()
     {
         return $this->hasOne(Moderator::class, 'id');
     }
 
-    public function BannedBy()
+    public function bannedBy()
     {
         return $this->belongsTo(Admin::class, 'banned_by');
     }

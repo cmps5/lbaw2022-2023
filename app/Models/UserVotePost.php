@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class UserVotePost
+use Illuminate\Database\Eloquent\Model;
+
+class UserVotePost extends Model
 {
 
     // Don't add create and update timestamps in database.
@@ -11,8 +13,17 @@ class UserVotePost
     protected $table = 'user_vote_post';
 
     protected $fillable = [
-        "blocker", "blocked"
+        "user_id", "tag_id"
     ];
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class, 'tag_id');
+    }
 }

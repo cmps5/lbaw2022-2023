@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
-class block
+use Illuminate\Database\Eloquent\Model;
+
+class block extends Model
 {
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'user_vote_post';
+    protected $table = 'block';
 
     protected $fillable = [
-        "user_id", "post_id", "type_of_vote"
+        "blocker", "blocked"
     ];
 
+    public function blocker()
+    {
+        return $this->belongsTo(User::class, 'blocker');
+    }
 
+    public function blocked()
+    {
+        return $this->belongsTo(User::class, 'blocked');
+    }
 
 }

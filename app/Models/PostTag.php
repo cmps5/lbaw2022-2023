@@ -18,12 +18,12 @@ class PostTag extends Model
     ];
 
 
-    public function Post()
+    public function post()
     {
         return $this->belongsTo(Post::class, 'post_id');
     }
 
-    public function Tag()
+    public function tag()
     {
         return $this->belongsTo(Tag::class, 'tag_id');
     }
