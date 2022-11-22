@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-class UserController
+use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redirect;
+
+
+class UserController extends Controller
 {
     public function __construct()
     {

@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
-class SearchController
+use App\Models\Post;
+use App\Models\Search;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class SearchController extends Controller
 {
 
     public function index()

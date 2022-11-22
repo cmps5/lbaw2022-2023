@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Post;
+
 class HomeController extends Controller
 {
     /**
