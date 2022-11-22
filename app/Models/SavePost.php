@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class SavePost
+use Illuminate\Database\Eloquent\Model;
+
+class SavePost  extends Model
 {
 
 }
