@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS "notification";
 DROP TABLE IF EXISTS save_post;
 DROP TABLE IF EXISTS "block";
 
--- public contents  
+-- public contents
 DROP TABLE IF EXISTS user_vote_comment;
 DROP TABLE IF EXISTS user_vote_post;
 DROP TABLE IF EXISTS "comment";
@@ -32,9 +32,9 @@ DROP TABLE IF EXISTS "admin";
 DROP TABLE IF EXISTS post;
 
 DROP TYPE IF EXISTS type_of_media;
-CREATE TYPE type_of_media AS ENUM ('text', 'image', 'video','*URL*'); 
+CREATE TYPE type_of_media AS ENUM ('text', 'image', 'video','*URL*');
 DROP TYPE IF EXISTS post_status;
-CREATE TYPE post_status AS ENUM ('open', 'closed', 'hidden','deleted'); 
+CREATE TYPE post_status AS ENUM ('open', 'closed', 'hidden','deleted');
 
 -- create the new schema
 
@@ -42,27 +42,27 @@ CREATE TYPE post_status AS ENUM ('open', 'closed', 'hidden','deleted');
 
 CREATE TABLE "admin"
 (
-    admin_id SERIAL PRIMARY KEY, 
-    "name" TEXT NOT NULL, 
+    admin_id SERIAL PRIMARY KEY,
+    "name" TEXT NOT NULL,
     "password" TEXT NOT NULL
 );
 
 CREATE TABLE "user"
 (
-    user_id SERIAL PRIMARY KEY, 
-    email TEXT NOT NULL CONSTRAINT user_email_uk UNIQUE, 
-    username TEXT NOT NULL CONSTRAINT user_username_uk UNIQUE, 
-    "name" TEXT NOT NULL, 
-    "password" TEXT NOT NULL, 
-    creation_date TIMESTAMP DEFAULT now(), 
-    profile_picture TEXT, 
-    bio TEXT, 
-    birth_date TIMESTAMP, 
-    reputation INTEGER DEFAULT 0, 
+    user_id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL CONSTRAINT user_email_uk UNIQUE,
+    username TEXT NOT NULL CONSTRAINT user_username_uk UNIQUE,
+    "name" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    creation_date TIMESTAMP DEFAULT now(),
+    profile_picture TEXT,
+    bio TEXT,
+    birth_date TIMESTAMP,
+    reputation INTEGER DEFAULT 0,
     end_timeout TIMESTAMP DEFAULT NULL,
     banned_by INTEGER REFERENCES "admin" (admin_id) ON UPDATE CASCADE,
 
-    CONSTRAINT creation_date_ck CHECK 
+    CONSTRAINT creation_date_ck CHECK
     (creation_date > birth_date AND creation_date <= now()),
     CONSTRAINT birth_date_ck CHECK (birth_date < current_date)
 );
@@ -70,9 +70,9 @@ CREATE TABLE "user"
 
 CREATE TABLE moderator
 (
-    moderator_id INTEGER PRIMARY KEY REFERENCES "user" (user_id) 
-    ON UPDATE CASCADE ON DELETE CASCADE, 
-    assigned_by INTEGER NOT NULL REFERENCES "admin" (admin_id) 
+    moderator_id INTEGER PRIMARY KEY REFERENCES "user" (user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    assigned_by INTEGER NOT NULL REFERENCES "admin" (admin_id)
     ON UPDATE CASCADE
 );
 
@@ -80,16 +80,16 @@ CREATE TABLE moderator
 
 CREATE TABLE post
 (
-    post_id SERIAL PRIMARY KEY, 
-    time_posted TIMESTAMP DEFAULT now(), 
+    post_id SERIAL PRIMARY KEY,
+    time_posted TIMESTAMP DEFAULT now(),
     title TEXT NOT NULL,
     "content" TEXT NOT NULL,
     media TEXT,
     media_type type_of_media,
-    votes INTEGER DEFAULT 0,   
+    votes INTEGER DEFAULT 0,
     edited BOOLEAN DEFAULT FALSE,
     "status" post_status DEFAULT 'open',
-    user_id INTEGER NOT NULL REFERENCES "user" (user_id) 
+    user_id INTEGER NOT NULL REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE SET NULL
 );
 
@@ -98,11 +98,11 @@ CREATE TABLE tag
     "name" TEXT UNIQUE,
     description TEXT,
     tag_id SERIAL PRIMARY KEY
-); 
+);
 
 CREATE TABLE post_tag
 (
-    post_id INTEGER REFERENCES post (post_id) 
+    post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     tag_id INTEGER REFERENCES tag ("tag_id")
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -113,24 +113,24 @@ CREATE TABLE post_tag
 
 CREATE TABLE "comment"
 (
-    comment_id SERIAL PRIMARY KEY, 
-    time_posted TIMESTAMP DEFAULT now(), 
+    comment_id SERIAL PRIMARY KEY,
+    time_posted TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
-    votes INTEGER DEFAULT 0, 
+    votes INTEGER DEFAULT 0,
     edited BOOLEAN DEFAULT FALSE,
-    user_id INTEGER NOT NULL REFERENCES "user" 
+    user_id INTEGER NOT NULL REFERENCES "user"
     ON UPDATE CASCADE ON DELETE SET NULL,
-    post_id INTEGER NOT NULL REFERENCES post 
-    ON UPDATE CASCADE ON DELETE CASCADE, 
-    parent_comment INTEGER REFERENCES "comment" (comment_id) 
+    post_id INTEGER NOT NULL REFERENCES post
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    parent_comment INTEGER REFERENCES "comment" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE user_vote_post
 (
-    user_id INTEGER REFERENCES "user" (user_id) 
+    user_id INTEGER REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    post_id INTEGER REFERENCES post (post_id) 
+    post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     type_of_vote BOOLEAN,
     PRIMARY KEY (user_id, post_id)
@@ -138,9 +138,9 @@ CREATE TABLE user_vote_post
 
 CREATE TABLE user_vote_comment
 (
-    user_id INTEGER REFERENCES "user" (user_id) 
+    user_id INTEGER REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    comment_id INTEGER REFERENCES "comment" (comment_id) 
+    comment_id INTEGER REFERENCES "comment" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     type_of_vote BOOLEAN,
     PRIMARY KEY (user_id, comment_id)
@@ -160,25 +160,25 @@ CREATE TABLE "block"
 );
 
 CREATE TABLE save_post
-(   
+(
     post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    user_id INTEGER REFERENCES "user" (user_id) 
-    ON UPDATE CASCADE ON DELETE CASCADE,  
+    user_id INTEGER REFERENCES "user" (user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (post_id, user_id)
 );
 
 CREATE TABLE "notification"
-(  
-    notification_id SERIAL PRIMARY KEY, 
-    time_sent TIMESTAMP DEFAULT now(), 
+(
+    notification_id SERIAL PRIMARY KEY,
+    time_sent TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
-    seen BOOLEAN DEFAULT FALSE, 
-    user_id INTEGER NOT NULL REFERENCES "user" (user_id) 
-    ON UPDATE CASCADE ON DELETE CASCADE, 
-    comment_id INTEGER  REFERENCES "comment" (comment_id) 
+    seen BOOLEAN DEFAULT FALSE,
+    user_id INTEGER NOT NULL REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    post_id INTEGER REFERENCES post (post_id) 
+    comment_id INTEGER  REFERENCES "comment" (comment_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
 
     CONSTRAINT notification_exclusivity CHECK (
@@ -188,22 +188,22 @@ CREATE TABLE "notification"
 );
 
 CREATE TABLE "search"
-(  
-    search_id SERIAL PRIMARY KEY, 
-    time_searched TIMESTAMP DEFAULT now(), 
-    "content" TEXT NOT NULL, 
+(
+    search_id SERIAL PRIMARY KEY,
+    time_searched TIMESTAMP DEFAULT now(),
+    "content" TEXT NOT NULL,
     user_id INTEGER NOT NULL REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "message"
-(   
-    message_id SERIAL PRIMARY KEY, 
-    time_sent TIMESTAMP DEFAULT now(), 
-    "content" TEXT NOT NULL, 
+(
+    message_id SERIAL PRIMARY KEY,
+    time_sent TIMESTAMP DEFAULT now(),
+    "content" TEXT NOT NULL,
     sender INTEGER NOT NULL REFERENCES "user" (user_id)
-    ON UPDATE CASCADE ON DELETE CASCADE, 
-    receiver INTEGER NOT NULL REFERENCES "user" (user_id) 
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    receiver INTEGER NOT NULL REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -220,7 +220,7 @@ CREATE TABLE follow
 
 CREATE TABLE user_follow_tag
 (
-    user_id SERIAL REFERENCES "user" (user_id) 
+    user_id SERIAL REFERENCES "user" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     tag_id INTEGER REFERENCES tag ("tag_id")
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -231,33 +231,67 @@ CREATE TABLE user_follow_tag
 
 CREATE TABLE report
 (
-    report_id SERIAL PRIMARY KEY, 
-    "date" TIMESTAMP DEFAULT now(), 
+    report_id SERIAL PRIMARY KEY,
+    "date" TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
-    reviewed BOOLEAN DEFAULT FALSE, 
-    reviewer INTEGER REFERENCES moderator (moderator_id) 
+    reviewed BOOLEAN DEFAULT FALSE,
+    reviewer INTEGER REFERENCES moderator (moderator_id)
     ON UPDATE CASCADE ON DELETE SET NULL,
     reporter INTEGER NOT NULL REFERENCES "user" (user_id)
-    ON UPDATE CASCADE ON DELETE SET NULL, 
-    reported_user INTEGER REFERENCES "user" (user_id) 
-    ON UPDATE CASCADE ON DELETE CASCADE, 
+    ON UPDATE CASCADE ON DELETE SET NULL,
+    reported_user INTEGER REFERENCES "user" (user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
     reported_post INTEGER REFERENCES post (post_id)
-    ON UPDATE CASCADE ON DELETE CASCADE, 
-    reported_comment INTEGER REFERENCES "comment" (comment_id) 
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    reported_comment INTEGER REFERENCES "comment" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 
     CONSTRAINT target_exclusivity CHECK (
-           (reported_user is NULL AND 
-            reported_post is NULL AND 
-            reported_comment IS NOT NULL) 
-        OR (reported_user is NULL AND 
-            reported_post is NOT NULL AND 
+           (reported_user is NULL AND
+            reported_post is NULL AND
+            reported_comment IS NOT NULL)
+        OR (reported_user is NULL AND
+            reported_post is NOT NULL AND
             reported_comment IS NULL)
-        OR (reported_user is NOT NULL AND 
+        OR (reported_user is NOT NULL AND
             reported_post is NULL AND
             reported_comment IS NULL)
     )
 );
+
+DROP TRIGGER IF EXISTS post_search_update ON post;
+DROP FUNCTION IF EXISTS post_search_update();
+
+-- full text search
+ALTER TABLE post
+ADD COLUMN tsvectors TSVECTOR;
+
+CREATE FUNCTION post_search_update() RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        NEW.tsvectors = (
+            setweight(to_tsvector('english',  NEW.title), 'A') ||
+            setweight(to_tsvector('english', NEW.content), 'B')
+        );
+    END IF;
+    IF TG_OP = 'UPDATE' THEN
+        IF (NEW.title <> OLD.title OR NEW.content <> OLD.content) THEN
+            NEW.tsvectors = (
+                setweight(to_tsvector('english', NEW.title), 'A') ||
+                setweight(to_tsvector('english', NEW.content), 'B')
+           );
+         END IF;
+    END IF;
+    RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER post_search_update
+BEFORE INSERT OR UPDATE ON post
+FOR EACH ROW
+EXECUTE PROCEDURE post_search_update();
+
+CREATE INDEX search_idx ON post USING GIN (tsvectors);
 
 
 --triggers
@@ -280,13 +314,13 @@ DROP FUNCTION IF EXISTS update_votes_comment() CASCADE;
 
 CREATE FUNCTION notify_new_post() RETURNS TRIGGER AS
 $BODY$
-DECLARE 
+DECLARE
 	temprow follow;
 BEGIN
-    FOR temprow IN 
+    FOR temprow IN
 		SELECT follower, followed FROM follow WHERE followed = NEW.user_id
 		LOOP
-			INSERT INTO "notification" ("content", user_id, comment_id, post_id) 
+			INSERT INTO "notification" ("content", user_id, comment_id, post_id)
 			VALUES(
 				'A user you follow just posted.', --content
 				temprow.follower,
@@ -300,22 +334,22 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER notify_new_post
 AFTER INSERT ON post
-FOR EACH ROW 
+FOR EACH ROW
 EXECUTE FUNCTION notify_new_post();
 
 
 CREATE FUNCTION notify_new_comment() RETURNS TRIGGER AS
 $BODY$
-DECLARE 
+DECLARE
 	temprow follow;
 BEGIN
-    FOR temprow IN 
+    FOR temprow IN
 		SELECT follower, followed FROM follow WHERE followed = NEW.user_id
 		LOOP
-			INSERT INTO "notification" ("content", user_id, comment_id, post_id) 
+			INSERT INTO "notification" ("content", user_id, comment_id, post_id)
 			VALUES(
 				'A user you follow just commented.',
-				temprow.follower, 
+				temprow.follower,
 				NEW.comment_id, --comment id
 				NULL); --post id
 		END LOOP;
@@ -378,12 +412,12 @@ DECLARE
     count_upvotes INTEGER;
 	count_downvotes INTEGER;
 BEGIN
-    count_upvotes = 
+    count_upvotes =
         (SELECT COUNT (*)
         FROM user_vote_post
         WHERE user_vote_post.post_id = NEW.post_id
         AND user_vote_post.type_of_vote = TRUE
-    ); 
+    );
     count_downvotes = (
         SELECT COUNT (*)
         FROM user_vote_post
@@ -409,12 +443,12 @@ DECLARE
     count_upvotes INTEGER;
 	count_downvotes INTEGER;
 BEGIN
-    count_upvotes = 
+    count_upvotes =
         (SELECT COUNT (*)
         FROM user_vote_comment
         WHERE user_vote_comment.comment_id = NEW.comment_id
         AND user_vote_comment.type_of_vote = TRUE
-    ); 
+    );
     count_downvotes = (
         SELECT COUNT (*)
         FROM user_vote_comment
@@ -432,6 +466,183 @@ AFTER INSERT OR UPDATE ON user_vote_comment
 FOR EACH ROW
 EXECUTE FUNCTION update_votes_comment();
 
+
+--triggers
+SET search_path TO lbaw22134;
+
+DROP TRIGGER IF EXISTS notify_new_post ON post;
+DROP TRIGGER IF EXISTS notify_new_comment ON "comment";
+DROP TRIGGER IF EXISTS delete_post ON post;
+DROP TRIGGER IF EXISTS delete_comment ON "comment";
+DROP TRIGGER IF EXISTS update_votes_post ON post CASCADE;
+DROP TRIGGER IF EXISTS update_votes_comment ON "comment" CASCADE;
+
+DROP FUNCTION IF EXISTS notify_new_post();
+DROP FUNCTION IF EXISTS notify_new_comment();
+DROP FUNCTION IF EXISTS delete_post();
+DROP FUNCTION IF EXISTS delete_comment();
+DROP FUNCTION IF EXISTS update_votes_post() CASCADE;
+DROP FUNCTION IF EXISTS update_votes_comment() CASCADE;
+
+
+CREATE FUNCTION notify_new_post() RETURNS TRIGGER AS
+$BODY$
+DECLARE
+	temprow follow;
+BEGIN
+    FOR temprow IN
+		SELECT follower, followed FROM follow WHERE followed = NEW.user_id
+		LOOP
+			INSERT INTO "notification" ("content", user_id, comment_id, post_id)
+			VALUES(
+				'A user you follow just posted.', --content
+				temprow.follower,
+				NULL, --not a post
+				NEW.post_id); --post id
+		END LOOP;
+    RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER notify_new_post
+AFTER INSERT ON post
+FOR EACH ROW
+EXECUTE FUNCTION notify_new_post();
+
+
+CREATE FUNCTION notify_new_comment() RETURNS TRIGGER AS
+$BODY$
+DECLARE
+	temprow follow;
+BEGIN
+    FOR temprow IN
+		SELECT follower, followed FROM follow WHERE followed = NEW.user_id
+		LOOP
+			INSERT INTO "notification" ("content", user_id, comment_id, post_id)
+			VALUES(
+				'A user you follow just commented.',
+				temprow.follower,
+				NEW.comment_id, --comment id
+				NULL); --post id
+		END LOOP;
+    RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER notify_new_comment
+AFTER INSERT ON "comment"
+FOR EACH ROW
+EXECUTE FUNCTION notify_new_comment();
+
+
+CREATE FUNCTION delete_post() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+	IF EXISTS (SELECT * FROM user_vote_post WHERE user_vote_post.post_id = OLD.post_id AND user_vote_post.type_of_vote <> NULL) THEN
+		RAISE EXCEPTION 'A post cannot be deleted if it has votes.';
+	END IF;
+	IF EXISTS (SELECT * FROM "comment" WHERE "comment".post_id = OLD.post_id) THEN
+		RAISE EXCEPTION 'A post cannot be deleted if it has comments.';
+	END IF;
+	RETURN OLD;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER delete_post
+BEFORE DELETE ON post
+FOR EACH ROW
+EXECUTE FUNCTION delete_post();
+
+
+CREATE FUNCTION delete_comment() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+	IF EXISTS (SELECT * FROM user_vote_comment WHERE user_vote_comment.comment_id = OLD.comment_id AND user_vote_comment.type_of_vote <> NULL) THEN
+		RAISE EXCEPTION 'A comment cannot be deleted if it has votes.';
+	END IF;
+	IF EXISTS (SELECT * FROM "comment" WHERE "comment".post_id = OLD.comment_id) THEN
+		RAISE EXCEPTION 'A comment cannot be deleted if it has comments.';
+	END IF;
+	RETURN OLD;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER delete_comment
+BEFORE DELETE ON "comment"
+FOR EACH ROW
+EXECUTE FUNCTION delete_comment();
+
+
+CREATE FUNCTION update_votes_post() RETURNS TRIGGER AS
+$BODY$
+DECLARE
+    count_upvotes INTEGER;
+	count_downvotes INTEGER;
+BEGIN
+    count_upvotes =
+        (SELECT COUNT (*)
+        FROM user_vote_post
+        WHERE user_vote_post.post_id = NEW.post_id
+        AND user_vote_post.type_of_vote = TRUE
+    );
+    count_downvotes = (
+        SELECT COUNT (*)
+        FROM user_vote_post
+        WHERE user_vote_post.post_id = NEW.post_id
+        AND user_vote_post.type_of_vote = FALSE
+    );
+    UPDATE post SET votes = (count_upvotes - count_downvotes) WHERE post.post_id = NEW.post_id;
+    RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_votes_post
+AFTER INSERT OR UPDATE ON user_vote_post
+FOR EACH ROW
+EXECUTE FUNCTION update_votes_post();
+
+
+
+CREATE FUNCTION update_votes_comment() RETURNS TRIGGER AS
+$BODY$
+DECLARE
+    count_upvotes INTEGER;
+	count_downvotes INTEGER;
+BEGIN
+    count_upvotes =
+        (SELECT COUNT (*)
+        FROM user_vote_comment
+        WHERE user_vote_comment.comment_id = NEW.comment_id
+        AND user_vote_comment.type_of_vote = TRUE
+    );
+    count_downvotes = (
+        SELECT COUNT (*)
+        FROM user_vote_comment
+        WHERE user_vote_comment.comment_id = NEW.comment_id
+        AND user_vote_comment.type_of_vote = FALSE
+    );
+    UPDATE "comment" SET votes = (count_upvotes - count_downvotes) WHERE "comment".comment_id = NEW.comment_id;
+    RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_votes_comment
+AFTER INSERT OR UPDATE ON user_vote_comment
+FOR EACH ROW
+EXECUTE FUNCTION update_votes_comment();
+
+-- performance indexes
+CREATE INDEX user_search ON "search" USING btree (user_id, time_searched DESC);
+CREATE INDEX user_message ON "message" USING btree (sender, receiver);
+CREATE INDEX user_post ON post USING hash (user_id);
 
 SET search_path TO lbaw22134;
 
@@ -1073,5 +1284,6 @@ INSERT INTO report ("content", reviewer, reporter, reported_user, reported_post,
 INSERT INTO report ("content", reviewer, reporter, reported_user, reported_post, reported_comment) VALUES ('bla ahah bla', 6, 4, NULL, 34, NULL);
 INSERT INTO report ("content", reviewer, reporter, reported_user, reported_post, reported_comment) VALUES ('bla djhfle bla', 34, 2, NULL, NULL, 8);
 INSERT INTO report ("content", reviewer, reporter, reported_user, reported_post, reported_comment) VALUES ('bla bla bncewçnla', 26, 2, 14, NULL, NULL);
+
 
 

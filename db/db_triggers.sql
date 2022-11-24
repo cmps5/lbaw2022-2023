@@ -1,4 +1,4 @@
- --triggers
+--triggers
 SET search_path TO lbaw22134;
 
 DROP TRIGGER IF EXISTS notify_new_post ON post;
