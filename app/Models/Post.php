@@ -13,6 +13,8 @@ class Post extends Model
 
     protected $table = 'post';
 
+    protected $primaryKey = 'post_id';
+
     protected $fillable = [
         "title",
         "content",
@@ -21,14 +23,21 @@ class Post extends Model
         "user_id"
     ];
 
-    public function madeBy()
+    public function user()
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function comments()
+    public function scopeSearch($query, $search)
     {
-        return $this->hasMany(Comment::class, "id");
+        if (!$search) {
+            return $query;
+        }
+
+        return $query
+            ->orderByRaw('ts_rank(tsvectors, to_tsquery(\'english\', ?)) DESC', [$search]);
     }
+
+
 
 }

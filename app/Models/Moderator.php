@@ -9,6 +9,7 @@ class Moderator  extends Model
 {
     use Notifiable;
 
+    protected $primaryKey = 'moderator_id';
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 

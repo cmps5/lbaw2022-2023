@@ -9,6 +9,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
+    protected $primaryKey = 'admin_id';
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 

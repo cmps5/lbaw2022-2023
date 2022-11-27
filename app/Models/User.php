@@ -14,12 +14,15 @@ class User extends Authenticatable
 
     protected $table = 'user';
 
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'user_id',
         "email",
         "username",
         "name",
@@ -39,19 +42,22 @@ class User extends Authenticatable
         'password'
     ]; //IN THE FUTURE - REMEMBER TOKEN FOR STAYING LOGGED IN
 
-    public function user()
+
+
+    public function posts()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasMany(Post::class);
     }
 
-    public function isMod()
+    public function searches()
     {
-        return $this->hasOne(Moderator::class, 'id');
+        return $this->hasMany(Search::class);
     }
 
-    public function bannedBy()
+    public function moderator()
     {
-        return $this->belongsTo(Admin::class, 'banned_by');
+        return $this->belongsTo(Moderator::class, 'id');
     }
+
 
 }
