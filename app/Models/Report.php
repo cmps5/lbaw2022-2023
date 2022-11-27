@@ -11,6 +11,8 @@ class Report extends Model
 
     protected $table = 'report';
 
+    protected $primaryKey = 'report_id';
+
     protected $fillable = [
         "content", "reviewer", "reporter", "reported_user", "reported_post", "reported_comment"
     ];

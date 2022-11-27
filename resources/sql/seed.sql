@@ -795,6 +795,7 @@ INSERT INTO follow (follower, followed) VALUES (1, 35);
 INSERT INTO follow (follower, followed) VALUES (44, 38);
 INSERT INTO follow (follower, followed) VALUES (35, 18);
 
+INSERT INTO post (title, "content", media, media_type, user_id) VALUES ('About rice with beans', 'I want creative ways to do that food. Any idea? Maybe some brazillian here to help me?', NULL, NULL, 1);
 INSERT INTO post (title, "content", media, media_type, user_id) VALUES ('User-friendly national capability', 'eget congue eget semper rutrum', NULL, NULL, 8);
 INSERT INTO post (title, "content", media, media_type, user_id) VALUES ('Profit-focused static conglomeration', 'dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero', NULL, NULL, 4);
 INSERT INTO post (title, "content", media, media_type, user_id) VALUES ('Multi-channelled modular throughput', 'nisi nam ultrices libero non mattis pulvinar NULLa pede ullamcorper augue a suscipit NULLa elit ac NULLa sed vel', NULL, NULL, 17);
