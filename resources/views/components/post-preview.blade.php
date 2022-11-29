@@ -18,7 +18,14 @@
 
         <!--Post owner -->
         <div class="d-flex flex-column text-center p-2">
-
+            @if ($post->user->picture)
+                <img src="{{ asset('storage/' . $post->user->picture) }}" alt="Post author profile picture"
+                     class="align-self-center rounded-circle" width="40" height="40"/>
+            @else
+                <img src="{{ url('images/default.png') }}" alt="Post author profile picture"
+                     class="align-self-center rounded-circle" width="40" height="40"/>
+            @endif
+            <small>{{ $post->user->username }}</small>
         </div>
 
         <!--Post itself -->
@@ -31,6 +38,12 @@
                         </a>
                         <p class="card-text">{{ $post->content }}</p>
                         <p class="card-text">
+                            <small class="text-muted">
+                                Created {{ Carbon::parse($post->created_at)->diffForHumans() }}.
+                                @if ($post->created_at != $post->updated_at)
+                                    Last updated {{ Carbon::parse($post->updated_at)->diffForHumans() }}
+                                @endif
+                            </small>
                         </p>
                     </div>
                     @if ($post->media)
