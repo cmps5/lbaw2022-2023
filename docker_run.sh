@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-env >> /.env
+cd /var/www
+env >> /var/www/.env
 php artisan clear-compiled
 php artisan config:clear
-php-fpm -D
+php-fpm8.1 -D
 nginx -g "daemon off;"
-

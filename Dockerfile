@@ -15,5 +15,3 @@ COPY docker_run.sh /docker_run.sh
 
 # Start command
 CMD sh /docker_run.sh
-
-
