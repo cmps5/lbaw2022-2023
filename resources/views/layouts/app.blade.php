@@ -28,7 +28,6 @@
     <div class="p-4">
 
     </div>
-    @include('layouts.footer')
 </div>
 </body>
 </html>
