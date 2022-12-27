@@ -25,7 +25,7 @@
             </div>
 
             <!--Post owner -->
-            <div class="d-flex flex-column text-center p-2">
+            <div class="d-flex col-md-1 text-center p-2 flex-column justify-content-center">
                 @if($post->user->picture)
                     <img src="{{ asset('storage/' . $post->user->picture) }}" class="align-self-center rounded-circle"
                          width="40" height="40" />
