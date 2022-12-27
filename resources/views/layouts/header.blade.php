@@ -1,5 +1,24 @@
-<header>
-    <nav class="navbar navbar-light" style="background-color: #7ec699;">
+<header style= "background-color: #7ec699;">
+    <div class="container d-flex justify-content-around" style="padding-top:0.5rem; padding-bottom:-0.5rem;">
+        <ul class="nav navbar-light justify-content-around">
+            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
+                <a class="nav-link text-dark h5 fw-bold" href="{{ route('home') }}">Home</a>
+            </li>
+            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
+                <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">About Us</a>
+            </li>
+            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
+                <a class="nav-link text-dark h5 fw-bold" href="{{ route('contacts') }}">Contacts</a>
+            </li>
+            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
+                <a class="nav-link text-dark h5 fw-bold" href="{{ route('help') }}">Help</a>
+            </li>
+            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
+                <a class="nav-link text-dark h5 fw-bold" href="{{ route('features') }}">Main Features</a>
+            </li>
+        </ul>
+    </div>
+    <nav class="navbar navbar-light" style="padding-top:0px;">
         <div class="container d-flex">
             <a href="{{ url('/') }}">
                 <img src="{{ url('/images/logo.png') }}" alt="Eat&Peas logo"
@@ -102,9 +121,13 @@
                         @endif
                     @endauth
                 </ul>
+                
             </div>
+            
         </div>
+        
     </nav>
+    
 </header>
 
 @yield('header')
