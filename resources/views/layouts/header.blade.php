@@ -1,24 +1,5 @@
 <header style= "background-color: #7ec699;">
-    <div class="container d-flex justify-content-around" style="padding-top:0.5rem; padding-bottom:-0.5rem;">
-        <ul class="nav navbar-light justify-content-around">
-            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
-                <a class="nav-link text-dark h5 fw-bold" href="{{ route('home') }}">Home</a>
-            </li>
-            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
-                <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">About Us</a>
-            </li>
-            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
-                <a class="nav-link text-dark h5 fw-bold" href="{{ route('contacts') }}">Contacts</a>
-            </li>
-            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
-                <a class="nav-link text-dark h5 fw-bold" href="{{ route('help') }}">Help</a>
-            </li>
-            <li class="nav-item" style="padding-top:1rem; padding-left:1rem; padding-right:1rem;">
-                <a class="nav-link text-dark h5 fw-bold" href="{{ route('features') }}">Main Features</a>
-            </li>
-        </ul>
-    </div>
-    <nav class="navbar navbar-light" style="padding-top:0px;">
+    <nav class="navbar navbar-light">
         <div class="container d-flex">
             <a href="{{ url('/') }}">
                 <img src="{{ url('/images/logo.png') }}" alt="Eat&Peas logo"
@@ -31,6 +12,21 @@
                 @csrf
                     <input class="form-control mr-sm-2" id="search-content" type="search" placeholder="Search" name="content" aria-label="Search">
             </form>
+
+            <ul class="nav navbar-light">
+                <li class="nav-item" style="padding-top:0.75rem;">
+                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">About Us</a>
+                </li>
+                <li class="nav-item" style="padding-top:0.75rem;">
+                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('contacts') }}">Contacts</a>
+                </li>
+                <li class="nav-item" style="padding-top:0.75rem;">
+                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('help') }}">Help</a>
+                </li>
+                <li class="nav-item" style="padding-top:0.75rem;">
+                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('features') }}">Main Features</a>
+                </li>
+            </ul>
 
             @guest
                 @if (Route::has('login'))

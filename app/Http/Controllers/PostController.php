@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail(1);
         $user = User::findOrFail($post['user_id']);
-        return view('posts.index', compact('user', 'post')) . view('posts.index', compact('user', 'post'));
+        return view('posts.index', compact('user', 'post'));
     }
 
 
