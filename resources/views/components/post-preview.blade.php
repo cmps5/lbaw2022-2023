@@ -33,7 +33,7 @@
             <div class="d-flex flex-row">
                 <div class="flex-grow-1">
                     <div class="card-body">
-                        <a href="{{ url('posts/' . $post->id) }}" style="text-decoration:none; color: black;">
+                        <a href="{{ url('posts/' . $post->post_id) }}" style="text-decoration:none; color: black;">
                             <h3 class="card-title">{{ $post->title }}</h3>
                         </a>
                         <p class="card-text">{{ $post->content }}</p>
