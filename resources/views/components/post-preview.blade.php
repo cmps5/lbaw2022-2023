@@ -17,7 +17,7 @@
         </div>
 
         <!--Post owner -->
-        <div class="d-flex flex-column text-center p-2">
+        <div class="d-flex col-md-1 text-center p-2 flex-column justify-content-center" style="width: 12.499999995%">
             @if ($post->user->picture)
                 <img src="{{ asset('storage/' . $post->user->picture) }}" alt="Post author profile picture"
                      class="align-self-center rounded-circle" width="40" height="40"/>
@@ -25,7 +25,7 @@
                 <img src="{{ url('images/default.png') }}" alt="Post author profile picture"
                      class="align-self-center rounded-circle" width="40" height="40"/>
             @endif
-            <small>{{ $post->user->username }}</small>
+            <p><small>{{ $post->user->username }}</small></p>
         </div>
 
         <!--Post itself -->
