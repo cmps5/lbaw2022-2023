@@ -13,20 +13,7 @@
                     <input class="form-control mr-sm-2" id="search-content" type="search" placeholder="Search" name="content" aria-label="Search">
             </form>
 
-            <ul class="nav navbar-light">
-                <li class="nav-item" style="padding-top:0.75rem;">
-                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">About Us</a>
-                </li>
-                <li class="nav-item" style="padding-top:0.75rem;">
-                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('contacts') }}">Contacts</a>
-                </li>
-                <li class="nav-item" style="padding-top:0.75rem;">
-                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('help') }}">Help</a>
-                </li>
-                <li class="nav-item" style="padding-top:0.75rem;">
-                    <a class="nav-link text-dark h5 fw-bold" href="{{ route('features') }}">Main Features</a>
-                </li>
-            </ul>
+
 
             @guest
                 @if (Route::has('login'))
@@ -86,44 +73,60 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
+                <ul class="ms-auto">
+                    <ul class="nav navbar-light">
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a>
-                                <a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                        <!-- Authentication Links -->
+                        @auth
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
+                                <li class="nav-item" style="padding-top:0.75rem;">
+                                    <a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a>
+                                </li>
+                                <li class="nav-item" style="padding-top:0.75rem;">
+                                    <a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a>
+                                </li>
+                                <li class="nav-item" style="padding-top:0.75rem;">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="padding-top:0.75rem;">
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </li>
+                        @endauth
+
+                        <li class="nav-item" style="padding-top:0.75rem;">
+                            <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">{{ __('About Us') }}</a>
                         </li>
-                    @else
-                        @if (Route::has('login'))
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @endif
-                        @if (Route::has('register'))
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        @endif
-                    @endauth
+                        <li class="nav-item" style="padding-top:0.75rem;">
+                            <a class="nav-link text-dark h5 fw-bold" href="{{ route('contacts') }}">{{ __('Contacts') }}</a>
+                        </li>
+                        <li class="nav-item" style="padding-top:0.75rem;">
+                            <a class="nav-link text-dark h5 fw-bold" href="{{ route('help') }}">{{ __('Help') }}</a>
+                        </li>
+                        <li class="nav-item" style="padding-top:0.75rem;">
+                            <a class="nav-link text-dark h5 fw-bold" href="{{ route('features') }}">{{ __('Main Features') }}</a>
+                        </li>
+
+                    </ul>
                 </ul>
-                
+
             </div>
-            
+
         </div>
-        
+
     </nav>
-    
+
 </header>
 
 @yield('header')
