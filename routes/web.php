@@ -43,7 +43,7 @@ Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.up
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 Route::delete('/users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
 //needs improvement
-Route::patch('/users/{user}', [UserController::class, 'extendTimeout'])->name('users.extendTimeout');
+Route::patch('/users/{user}/extendTimeout', [UserController::class, 'extendTimeout'])->name('users.extendTimeout');
 
 // Post
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

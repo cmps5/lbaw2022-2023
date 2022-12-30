@@ -40,6 +40,10 @@
                                     <button class="flex-item fw-light h-auto btn btn-primary">{{ __('Message') }}</button>
                                 </div>
                             </div>
+                        @else
+                            <button class="flex-item fw-light h-auto btn btn-primary" style="width: 33%;"
+                                    href="{{ url('users/' . $user->id . '/edit') }}">{{ __('Edit Profile') }}
+                            </button>
                         @endif
                         <!-- reputation -->
                         <div class="row fw-light">
