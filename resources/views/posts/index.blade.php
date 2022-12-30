@@ -77,6 +77,51 @@
                     </svg>
                 </div>
             </div>
+            <div class="flex-fill">
+                <div class="d-flex flex-row">
+                    <div class="flex-grow-1">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ $post->title }}
+                                @auth()
+                                    @if (Auth::user()->id == $post->user->id)
+                                        <div class="d-flex">
+
+                                            <form action="{{ route('posts.edit', $post) }}" method="POST">
+                                                @method('GET')
+                                                @csrf
+                                                <button type="submit" href="{{ route('posts.edit', $post) }}" class="btn btn-link fs-5">[Edit]</button>
+                                            </form>
+
+                                            <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-link fs-5">[Delete]</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @endauth
+                            </h3>
+                            <p class="card-text">{{ $post->content }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Created {{ Carbon::parse($post->created_at)->diffForHumans() }}.
+                                    @if ($post->created_at != $post->updated_at)
+                                        Last updated {{ Carbon::parse($post->updated_at)->diffForHumans() }}
+                                    @endif
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+
+                    @if ($post->media)
+                        <div>
+                            <img src="{{ asset('storage/' . $post->media) }}" class="img-fluid m-3"
+                                 style="width: 15rem; height: 15rem;">
+                        </div>
+                    @endif
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection
