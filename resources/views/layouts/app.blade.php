@@ -25,7 +25,7 @@
     <main class="py-4">
         @yield('content')
     </main>
-    <div class="p-4">
+    <div style="padding: 2rem;">
 
     </div>
 </div>

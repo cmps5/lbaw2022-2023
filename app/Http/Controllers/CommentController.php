@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CommentController extends Controller
 {
@@ -72,11 +74,25 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        Post::destroy($id);
+        return Redirect(RouteServiceProvider::HOME, 302);
+    }
+
+
+    /**
+     * Shows the page for editing a resource.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\View
+     */
+    public function edit($id)
+    {
+        $comment = Post::findOrFail($id);
+        return view('comment.edit', compact('comment'));
     }
 }
