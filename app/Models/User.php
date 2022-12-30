@@ -60,4 +60,51 @@ class User extends Authenticatable
     }
 
 
+
+    public function tags()
+    {
+        $tags = $this->belongsToMany(Tag::class, "users_follows_on_tags")->get();
+
+        return $tags;
+    }
+    public function votes_on_posts()
+    {
+        return $this->hasMany(Users_votes_on_post::class);
+    }
+
+    public function votes_on_comments()
+    {
+        return $this->hasMany(Users_votes_on_comment::class);
+    }
+
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+
+    public function followers()
+    {
+        $followers = $this->belongsToMany(User::class, 'follows', 'followed', "follower")->get();
+        return $followers;
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, "follows", "follower", "followed")->get();
+    }
+
+    public function blocking()
+    {
+        $blocking = $this->belongsToMany(User::class, "blocks", "blocker", "blocked")->get();
+        //dd($blocking);
+        return $blocking;
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter');
+    }
+    public function notifications(){
+        return $this->hasMany(Notification::class)->orderByDesc('created_at');
+    }
 }

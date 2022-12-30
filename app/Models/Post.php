@@ -38,7 +38,16 @@ class Post extends Model
         return $query
             ->orderByRaw('ts_rank(tsvectors, to_tsquery(\'english\', ?)) DESC', [$search]);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->orderBy('id');
+    }
 
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, "posts_tags");
+    }
 
 
 }
