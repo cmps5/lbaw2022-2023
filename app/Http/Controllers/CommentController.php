@@ -39,15 +39,20 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'content' => ['string'],
+        $request->validate([
+            'content' => ['required', 'string'],
         ]);
 
-        auth()->user()->comments()->create($data);
+        //da imensos erros de outra forma
+        DB::table('comments')->insert([
+            'content' => $request['content'],
+            'post_id' => $request['post_id'],
+            'parent' => $request['parent'],
+            'user_id' => auth()->user()->id,
+        ]);
 
-        return Redirect('/posts/' . $request->post->id,201);
+        return Redirect('/posts/' . $request['post_id'],201);
     }
-
     /**
      * Display the specified resource.
      *
@@ -79,8 +84,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        Post::destroy($id);
-        return Redirect(RouteServiceProvider::HOME, 302);
+        $post = Comment::find($id)->post;
+        Comment::destroy($id);
+        return Redirect::to('/posts/' . $post->id, 302);
     }
 
 
@@ -92,7 +98,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        $comment = Post::findOrFail($id);
-        return view('comment.edit', compact('comment'));
+        $comment = Comment::findOrFail($id);
+        return view('posts.comments.edit', compact('comment'));
     }
 }

@@ -58,6 +58,13 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::get('/searches', [SearchController::class, 'index'])->name('search.index');
 Route::get('/searches/{search}', [SearchController::class, 'show'])->name('search.show');
 Route::post('/searches', [SearchController::class, 'store'])->name('search.store');
+// Comment
+Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
+Route::get('/comments/{comments}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::patch('/comments/{comments}', [CommentController::class, 'update'])->name('comments.update');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/comments/{comments}', [CommentController::class, 'show'])->name('comments.show');
+Route::delete('/comments/{comments}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 // --------------------------------------------
 // Report
