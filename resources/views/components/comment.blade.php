@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <h3 class="card-title">
                             @auth()
-                                @if (Auth::user()->id == $comment->user->id)
+                                @if (Auth::user()->user_id == $comment->user->user_id)
                                     <div class="d-flex">
 
                                         <form action="{{ route('comments.edit', $comment) }}" method="POST">
@@ -86,8 +86,8 @@
                                                       name="content" style="height: 5rem; width: 29rem;"></textarea>
                                         <label for="comment-content" class="form-label fw-bold">Comment</label>
                                     </div>
-                                    <input name="post_id" value="{{ $comment->post->id }}" hidden/>
-                                    <input name="parent" value="{{ $comment->id }}" hidden/>
+                                    <input name="post_id" value="{{ $comment->post->post_id }}" hidden/>
+                                    <input name="parent" value="{{ $comment->comment_id }}" hidden/>
                                     <button type="submit" class="btn btn-primary mx-3">Leave a comment</button>
                                 </form>
                             </div>

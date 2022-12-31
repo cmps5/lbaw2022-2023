@@ -5,13 +5,13 @@ INSERT INTO "admin" ("name", "password") VALUES ('matiasfg', 'd7201fad0eb9dbc54a
 INSERT INTO "admin" ("name", "password") VALUES ('joaodasneves', 'dfddc4aa86acec7c5df5cc97a2c9438d');
 INSERT INTO "admin" ("name", "password") VALUES ('tomasagante', '26c6d3c118af81b36b9293d70ba03099');
 
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('mmoret@berkeley.edu', 'mmoret1', 'Marven Moret', '36a6ee38cd8c7a4375a91eb5bb3ca13f', 'http://dummyimage.com/85x47.png/cc0000/ffffff', 'Passionate for french cuisine', '1976-09-19 02:39:45', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('ylippitt2@zimbio.com', 'ylippitt2', 'Yolande Lippitt', '403e2fa59c01287a8dc9cfaed1962a02', 'http://dummyimage.com/82x44.png/cc0000/ffffff', 'Organic food is really healthier', '1975-04-06 05:03:26', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('khalsworth3@discuz.net', 'khalsworth3', 'Kimberli Halsworth', '5852371166eaa5fe740d372b247d803f', 'http://dummyimage.com/52x43.png/ff4444/ffffff', 'Beans lover', '1977-11-04 05:32:40', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('ejosephs4@ihg.com', 'ejosephs4', 'Edouard Josephs', 'c72e1c5e3df0022083bfa7318d5a2b01', 'http://dummyimage.com/40x67.png/cc0000/ffffff', 'Professional bakery owner', '1968-04-03 04:43:02', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('lfolds5@meetup.com', 'lfolds5', 'Leonerd Folds', '86673df685aa8a788a4007828b40c1d8', 'http://dummyimage.com/78x26.png/dddddd/000000', 'Graduated in cuisine', '1969-12-12 18:51:03', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('reamer6@jugem.jp', 'reamer6', 'Roosevelt Eamer', '402f4be2277bfcfcba2c4ef5827ab057', 'http://dummyimage.com/99x50.png/dddddd/000000', 'I love cooking. ', '1977-02-07 20:17:34', NULL);
-INSERT INTO "user" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('rnavarijo7@friendfeed.com', 'rnavarijo7', 'Rusty Navarijo', '3a1fd3f97b12ceed4d73356e3cdb31da', 'http://dummyimage.com/39x11.png/cc0000/ffffff', 'Hey, im here to help. Cooking is my passion', '1984-09-17 16:43:32', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('mmoret@berkeley.edu', 'mmoret1', 'Marven Moret', '36a6ee38cd8c7a4375a91eb5bb3ca13f', 'http://dummyimage.com/85x47.png/cc0000/ffffff', 'Passionate for french cuisine', '1976-09-19 02:39:45', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('ylippitt2@zimbio.com', 'ylippitt2', 'Yolande Lippitt', '403e2fa59c01287a8dc9cfaed1962a02', 'http://dummyimage.com/82x44.png/cc0000/ffffff', 'Organic food is really healthier', '1975-04-06 05:03:26', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('khalsworth3@discuz.net', 'khalsworth3', 'Kimberli Halsworth', '5852371166eaa5fe740d372b247d803f', 'http://dummyimage.com/52x43.png/ff4444/ffffff', 'Beans lover', '1977-11-04 05:32:40', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('ejosephs4@ihg.com', 'ejosephs4', 'Edouard Josephs', 'c72e1c5e3df0022083bfa7318d5a2b01', 'http://dummyimage.com/40x67.png/cc0000/ffffff', 'Professional bakery owner', '1968-04-03 04:43:02', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('lfolds5@meetup.com', 'lfolds5', 'Leonerd Folds', '86673df685aa8a788a4007828b40c1d8', 'http://dummyimage.com/78x26.png/dddddd/000000', 'Graduated in cuisine', '1969-12-12 18:51:03', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('reamer6@jugem.jp', 'reamer6', 'Roosevelt Eamer', '402f4be2277bfcfcba2c4ef5827ab057', 'http://dummyimage.com/99x50.png/dddddd/000000', 'I love cooking. ', '1977-02-07 20:17:34', NULL);
+INSERT INTO "users" (email, username, "name", "password", profile_picture, bio , birth_date, banned_by) VALUES ('rnavarijo7@friendfeed.com', 'rnavarijo7', 'Rusty Navarijo', '3a1fd3f97b12ceed4d73356e3cdb31da', 'http://dummyimage.com/39x11.png/cc0000/ffffff', 'Hey, im here to help. Cooking is my passion', '1984-09-17 16:43:32', NULL);
 
 INSERT INTO follow (follower, followed) VALUES (1, 7);
 INSERT INTO follow (follower, followed) VALUES (2, 7);
@@ -54,9 +54,9 @@ INSERT INTO post_tag (post_id, tag_id) VALUES (5, 4);
 INSERT INTO post_tag (post_id, tag_id) VALUES (5, 5);
 
 
-INSERT INTO "comment" ("content", user_id, post_id, parent_comment) VALUES ('Congratulations man!!! For helping you, i highly recommend at least 3 pans and 1 fridge. But depends for your budget. Can you give more details?', 1, 5, NULL);
-INSERT INTO "comment" ("content", user_id, post_id, parent_comment) VALUES ('Thank u guy! Something around 1000 euros', 1, 5, 1);
-INSERT INTO "comment" ("content", user_id, post_id, parent_comment) VALUES ('Try to avoid in the first moment too much specific tools. Observer first if you miss them.', 3, 5, NULL);
+INSERT INTO "comments" ("content", user_id, post_id, parent_comment) VALUES ('Congratulations man!!! For helping you, i highly recommend at least 3 pans and 1 fridge. But depends for your budget. Can you give more details?', 1, 5, NULL);
+INSERT INTO "comments" ("content", user_id, post_id, parent_comment) VALUES ('Thank u guy! Something around 1000 euros', 1, 5, 1);
+INSERT INTO "comments" ("content", user_id, post_id, parent_comment) VALUES ('Try to avoid in the first moment too much specific tools. Observer first if you miss them.', 3, 5, NULL);
 
 
 INSERT INTO user_vote_post (user_id, post_id, type_of_vote) VALUES (1, 1, FALSE);

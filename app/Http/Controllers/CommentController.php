@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -32,10 +33,9 @@ class CommentController extends Controller
         DB::table('comments')->insert([
             'content' => $request['content'],
             'post_id' => $request['post_id'],
-            'parent' => $request['parent'],
-            'user_id' => auth()->user()->id,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'parent_comment' => $request['parent'],
+            'user_id' => auth()->user()->user_id,
+            'time_posted' => now()
         ]);
 
         return Redirect('/posts/' . $request['post_id'],201);

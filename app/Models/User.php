@@ -17,7 +17,7 @@ class User extends Authenticatable
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'user';
+    protected $table = 'users';
 
     protected $primaryKey = 'user_id';
 
@@ -27,6 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'name',
         'username',
         'email',
