@@ -16,21 +16,6 @@ class CommentController extends Controller
         $this->middleware('auth')->only('store', 'create');
     }
 
-    public function create()
-    {
-        return view('comments.create');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,21 +34,12 @@ class CommentController extends Controller
             'post_id' => $request['post_id'],
             'parent' => $request['parent'],
             'user_id' => auth()->user()->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return Redirect('/posts/' . $request['post_id'],201);
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -71,22 +47,32 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+        Comment::where('id', $id)->update([
+            'content' => $request['content'],
+        ]);
+        return Redirect::to('/posts/' . $comment->post->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        $post = Comment::find($id)->post;
-        Comment::destroy($id);
-        return Redirect::to('/posts/' . $post->id, 302);
+        $post = Comment::findOrFail($id)->post;
+
+        try {
+            Comment::destroy($id);
+        } catch (QueryException $exception) {
+            return Redirect::back()->withErrors(['destroy' => 'Your request cannot be satisfied at the moment.']);
+        }
+
+        return Redirect::to('/posts/' . $post->id);
     }
 
 

@@ -12,10 +12,19 @@
 */
 
 
+
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UsersFollowsOnTagController;
+use App\Http\Controllers\UsersVotesOnCommentController;
+use App\Http\Controllers\UsersVotesOnPostController;
+use App\Http\Controllers\BlockingController;
+use App\Models\Users_votes_on_comment;
+use App\Models\Users_votes_on_post;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -59,11 +68,9 @@ Route::get('/searches', [SearchController::class, 'index'])->name('search.index'
 Route::get('/searches/{search}', [SearchController::class, 'show'])->name('search.show');
 Route::post('/searches', [SearchController::class, 'store'])->name('search.store');
 // Comment
-Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
 Route::get('/comments/{comments}/edit', [CommentController::class, 'edit'])->name('comments.edit');
 Route::patch('/comments/{comments}', [CommentController::class, 'update'])->name('comments.update');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::get('/comments/{comments}', [CommentController::class, 'show'])->name('comments.show');
 Route::delete('/comments/{comments}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 // --------------------------------------------

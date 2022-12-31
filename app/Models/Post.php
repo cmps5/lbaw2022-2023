@@ -16,12 +16,10 @@ class Post extends Model
     protected $primaryKey = 'post_id';
 
     protected $fillable = [
-        "post_id",
-        "title",
-        "content",
-        "media",
-        "media_type",
-        "user_id"
+        'title',
+        'content',
+        'media',
+        'status'
     ];
 
     public function user()
@@ -40,7 +38,7 @@ class Post extends Model
     }
     public function comments()
     {
-        return $this->hasMany(Comment::class)->orderBy('id');
+        return $this->hasMany(Comment::class, "post_id")->orderBy('post_id');
     }
 
 
