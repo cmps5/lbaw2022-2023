@@ -9,12 +9,12 @@ class Comment extends Model
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'comment';
+    protected $table = 'comments';
 
     protected $primaryKey = 'comment_id';
 
     protected $fillable = [
-        "content", "user_id", "post_id", "parent_comment"
+        "comment_id", "content", "user_id", "post_id", "parent_comment"
     ];
 
 

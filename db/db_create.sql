@@ -20,12 +20,14 @@ DROP TABLE IF EXISTS post CASCADE;
 DROP TABLE IF EXISTS user_vote_comment;
 DROP TABLE IF EXISTS user_vote_post;
 DROP TABLE IF EXISTS "comment";
+DROP TABLE IF EXISTS "comments";
 DROP TABLE IF EXISTS post_tag;
 DROP TABLE IF EXISTS tag;
 
 -- user groups
 DROP TABLE IF EXISTS moderator;
 DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "users";
 DROP TABLE IF EXISTS "admin";
 
 
@@ -45,7 +47,7 @@ CREATE TABLE "admin"
     "password" TEXT NOT NULL
 );
 
-CREATE TABLE "user"
+CREATE TABLE "users"
 (
     user_id SERIAL PRIMARY KEY,
     email TEXT NOT NULL CONSTRAINT user_email_uk UNIQUE,
@@ -68,7 +70,7 @@ CREATE TABLE "user"
 
 CREATE TABLE moderator
 (
-    moderator_id INTEGER PRIMARY KEY REFERENCES "user" (user_id)
+    moderator_id INTEGER PRIMARY KEY REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     assigned_by INTEGER NOT NULL REFERENCES "admin" (admin_id)
     ON UPDATE CASCADE
@@ -87,7 +89,7 @@ CREATE TABLE post
     votes INTEGER DEFAULT 0,
     edited BOOLEAN DEFAULT FALSE,
     "status" post_status DEFAULT 'open',
-    user_id INTEGER NOT NULL REFERENCES "user" (user_id)
+    user_id INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE SET NULL
 );
 
@@ -109,24 +111,24 @@ CREATE TABLE post_tag
 
 );
 
-CREATE TABLE "comment"
+CREATE TABLE "comments"
 (
     comment_id SERIAL PRIMARY KEY,
     time_posted TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
     votes INTEGER DEFAULT 0,
     edited BOOLEAN DEFAULT FALSE,
-    user_id INTEGER NOT NULL REFERENCES "user"
+    user_id INTEGER NOT NULL REFERENCES "users"
     ON UPDATE CASCADE ON DELETE SET NULL,
     post_id INTEGER NOT NULL REFERENCES post
     ON UPDATE CASCADE ON DELETE CASCADE,
-    parent_comment INTEGER REFERENCES "comment" (comment_id)
+    parent_comment INTEGER REFERENCES "comments" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE user_vote_post
 (
-    user_id INTEGER REFERENCES "user" (user_id)
+    user_id INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -136,9 +138,9 @@ CREATE TABLE user_vote_post
 
 CREATE TABLE user_vote_comment
 (
-    user_id INTEGER REFERENCES "user" (user_id)
+    user_id INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    comment_id INTEGER REFERENCES "comment" (comment_id)
+    comment_id INTEGER REFERENCES "comments" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     type_of_vote BOOLEAN,
     PRIMARY KEY (user_id, comment_id)
@@ -148,9 +150,9 @@ CREATE TABLE user_vote_comment
 
 CREATE TABLE "block"
 (
-    blocker INTEGER REFERENCES "user" (user_id)
+    blocker INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    blocked INTEGER REFERENCES "user" (user_id)
+    blocked INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (blocker, blocked),
 
@@ -161,7 +163,7 @@ CREATE TABLE save_post
 (
     post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    user_id INTEGER REFERENCES "user" (user_id)
+    user_id INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (post_id, user_id)
 );
@@ -172,9 +174,9 @@ CREATE TABLE "notification"
     time_sent TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
     seen BOOLEAN DEFAULT FALSE,
-    user_id INTEGER NOT NULL REFERENCES "user" (user_id)
+    user_id INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    comment_id INTEGER  REFERENCES "comment" (comment_id)
+    comment_id INTEGER  REFERENCES "comments" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     post_id INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -190,7 +192,7 @@ CREATE TABLE "search"
     search_id SERIAL PRIMARY KEY,
     time_searched TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
-    user_id INTEGER NOT NULL REFERENCES "user" (user_id)
+    user_id INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -199,17 +201,17 @@ CREATE TABLE "message"
     message_id SERIAL PRIMARY KEY,
     time_sent TIMESTAMP DEFAULT now(),
     "content" TEXT NOT NULL,
-    sender INTEGER NOT NULL REFERENCES "user" (user_id)
+    sender INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    receiver INTEGER NOT NULL REFERENCES "user" (user_id)
+    receiver INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE follow
 (
-    follower INTEGER REFERENCES "user" (user_id)
+    follower INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    followed INTEGER REFERENCES "user" (user_id)
+    followed INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (follower, followed),
 
@@ -218,7 +220,7 @@ CREATE TABLE follow
 
 CREATE TABLE user_follow_tag
 (
-    user_id SERIAL REFERENCES "user" (user_id)
+    user_id SERIAL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     tag_id INTEGER REFERENCES tag ("tag_id")
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -235,13 +237,13 @@ CREATE TABLE report
     reviewed BOOLEAN DEFAULT FALSE,
     reviewer INTEGER REFERENCES moderator (moderator_id)
     ON UPDATE CASCADE ON DELETE SET NULL,
-    reporter INTEGER NOT NULL REFERENCES "user" (user_id)
+    reporter INTEGER NOT NULL REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE SET NULL,
-    reported_user INTEGER REFERENCES "user" (user_id)
+    reported_user INTEGER REFERENCES "users" (user_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
     reported_post INTEGER REFERENCES post (post_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    reported_comment INTEGER REFERENCES "comment" (comment_id)
+    reported_comment INTEGER REFERENCES "comments" (comment_id)
     ON UPDATE CASCADE ON DELETE CASCADE
 
     CONSTRAINT target_exclusivity CHECK (

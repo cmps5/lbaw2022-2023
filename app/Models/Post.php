@@ -16,6 +16,7 @@ class Post extends Model
     protected $primaryKey = 'post_id';
 
     protected $fillable = [
+        'post_id',
         'title',
         'content',
         'media',
