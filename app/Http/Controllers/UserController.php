@@ -53,9 +53,9 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($id)],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'description' => ['nullable', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', Rule::unique('user')->ignore($id)],
+            'email' => ['required', 'email', 'max:255', Rule::unique('user')->ignore($id)],
+            'bio' => ['nullable', 'string', 'max:255'],
             'picture' => ['nullable', 'image'],
         ]);
 
@@ -74,11 +74,11 @@ class UserController extends Controller
             'name' => $request['name'],
             'username' => $request['username'],
             'email' => $request['email'],
-            'description' => $request['description'],
+            'bio' => $request['bio'],
             'media' => $request['picture'] ? $request['picture']->store('profiles', 'public') : null,
         ]);
 
-        return Redirect::to('users/'. $id);
+        return Redirect::to('user/'. $id);
     }
 
     /**
