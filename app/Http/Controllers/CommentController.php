@@ -72,7 +72,7 @@ class CommentController extends Controller
             return Redirect::back()->withErrors(['destroy' => 'Your request cannot be satisfied at the moment.']);
         }
 
-        return Redirect::to('/posts/' . $post->id);
+        return Redirect::to('/posts/' . $post->post_id);
     }
 
 
