@@ -73,7 +73,7 @@ class PostController extends Controller
         if (File::exists('storage/' . $post['media']))
             File::delete('storage/' . $post['media']);
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'title' => $request['title'],
             'content' => $request['content'],
             'media' => $request['media'] ? $request['media']->store('posts', 'public') : null,
