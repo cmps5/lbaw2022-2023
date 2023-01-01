@@ -47,11 +47,11 @@ Route::get('/features', function () {
 })->name('features');
 
 // User
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('userszz.edit');
-Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-Route::delete('/users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
-//needs improvement
+Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('users.delete');
+
 Route::patch('/users/{user}/extendTimeout', [UserController::class, 'extendTimeout'])->name('users.extendTimeout');
 
 // Post

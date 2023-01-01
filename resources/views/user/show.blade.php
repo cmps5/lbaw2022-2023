@@ -3,7 +3,13 @@
 @section('content')
     <div class="container">
         <div class="d-flex gap-2">
-            <!-- user information -->
+
+            @if(Session::has('success'))
+                <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
+            @endif
+            <div class="d-flex gap-2">
+                <!-- user information -->
+
             <div class="flex-item mx-1" style="min-width:300px">
                 <div class="d-flex flex-column gap-2">
                     <!-- image profile -->
@@ -41,9 +47,9 @@
                                 </div>
                             </div>
                         @else
-                            <button class="flex-item fw-light h-auto btn btn-primary" style="width: 33%;"
-                                    href="{{ url('users/' . $user->id . '/edit') }}">{{ __('Edit Profile') }}
-                            </button>
+                            <a class="flex-item fw-light h-auto btn btn-primary" style="width: 33%;"
+                               href="{{ route('users.edit', $user->id) }}">{{ __('Edit Profile') }}
+                            </a>
                         @endif
                         <!-- reputation -->
                         <div class="row fw-light">

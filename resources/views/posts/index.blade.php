@@ -3,6 +3,24 @@
 @section('content')
     <div class="container">
         <div class="card d-flex flex-row">
+
+            <script>
+                function UpvotePost(){
+                    const request = new XMLHttpRequest();
+
+                    let votesUpdate = function() {
+                        document.getElementById("VotesPost").innerHTML =
+                            {{ $post->votes }};
+                    }
+
+                    request.open("POST", "/upvotePost");
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    request.onreadystatechange = votesUpdate;
+                    request.send("{{$post->id}}");
+                }
+            </script>
+
+
             <!--Post itself -->
             <div class="flex-fill">
                 <div class="d-flex flex-row">
