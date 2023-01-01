@@ -19,9 +19,9 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UsersFollowsOnTagController;
-use App\Http\Controllers\UsersVotesOnCommentController;
-use App\Http\Controllers\UsersVotesOnPostController;
+use App\Http\Controllers\UserFollowTagController;
+use App\Http\Controllers\UserVoteCommentController;
+use App\Http\Controllers\UserVotePostController;
 use App\Http\Controllers\BlockingController;
 use App\Models\Users_votes_on_comment;
 use App\Models\Users_votes_on_post;
@@ -72,6 +72,10 @@ Route::get('/comments/{comments}/edit', [CommentController::class, 'edit'])->nam
 Route::patch('/comments/{comments}', [CommentController::class, 'update'])->name('comments.update');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{comments}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+// Votes
+Route::post('/upvoteComment', [UserVoteCommentController::class, 'upvoteComment'])->name('upvoteComment');
+Route::post('/downvoteComment', [UserVoteCommentController::class, 'downvoteComment'])->name('downvoteComment');
 
 // --------------------------------------------
 // Report

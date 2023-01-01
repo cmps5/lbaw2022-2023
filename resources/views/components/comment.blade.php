@@ -5,21 +5,35 @@
     @endisset
     <!-- Votes -->
     <div class="d-flex flex-column justify-content-center text-center p-4">
-        <div>
+        <div><a href="{{ route('upvoteComment') }}" onclick="event.preventDefault(); document.getElementById('upvoteComment{{ $comment->comment_id }}').submit();">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                  class="bi bi-arrow-up-circle-fill align-self-center" viewBox="0 0 16 16">
                 <path
                     d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-            </svg>
+            </svg></a>
         </div>
+
+        <form enctype="multipart/form-data" id="upvoteComment{{ $comment->comment_id }}" action="{{ route('upvoteComment') }}" method="POST" class="d-none">
+            @csrf
+            <input name="post_id" value="{{ $comment->post->post_id }}" hidden/>
+            <input name="comment_id" value="{{ $comment->comment_id }}" hidden/>
+        </form>
+
+
         <div class="mt-1">{{ $comment->votes }}</div>
-        <div>
+        <div><a href="{{ route('downvoteComment') }}" onclick="event.preventDefault(); document.getElementById('downvoteComment{{ $comment->comment_id }}').submit();">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                  class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
                 <path
                     d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-            </svg>
+            </svg></a>
         </div>
+
+        <form enctype="multipart/form-data" id="downvoteComment{{ $comment->comment_id }}" action="{{ route('downvoteComment') }}" method="POST" class="d-none">
+            @csrf
+            <input name="post_id" value="{{ $comment->post->post_id }}" hidden/>
+            <input name="comment_id" value="{{ $comment->comment_id }}" hidden/>
+        </form>
     </div>
 
     <!-- Comment owner -->
