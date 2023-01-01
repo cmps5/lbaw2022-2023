@@ -70,36 +70,6 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-light">
-
-                    <!-- Authentication Links -->
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <li class="nav-item" style="padding-top:0.75rem;">
-                                <a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a>
-                            </li>
-                            <li class="nav-item" style="padding-top:0.75rem;">
-                                <a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a>
-                            </li>
-                            <li class="nav-item" style="padding-top:0.75rem;">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                </a>
-                            </li>
-                            <li class="nav-item" style="padding-top:0.75rem;">
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </li>
-                        </li>
-                    @endauth
-
                     <ul class="nav navbar-light justify-content-center w-100">
                         <li class="nav-item" style="padding-top:0.75rem; padding-left:2.75rem; padding-right:2.75rem;">
                             <a class="nav-link text-dark h5 fw-bold" href="{{ route('about') }}">{{ __('About Us') }}</a>
@@ -116,7 +86,7 @@
                     </ul>
 
                 </ul>
-                
+
 
             </div>
 
