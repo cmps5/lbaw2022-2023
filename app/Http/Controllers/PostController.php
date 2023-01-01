@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 
 class PostController extends Controller
@@ -45,9 +46,17 @@ class PostController extends Controller
         ]);
 
         $data['media'] = $request['media'] ? $request['media']->store('posts', 'public') : null;
-        auth()->user()->posts()->create($data);
 
-        return Redirect(RouteServiceProvider::HOME,201);
+        //da imensos erros de outra forma
+        DB::table('post')->insert([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'user_id' => auth()->user()->user_id,
+            'time_posted' => now(),
+            'media' => $data['media']
+        ]);
+
+        return Redirect::to('/');
     }
 
 
