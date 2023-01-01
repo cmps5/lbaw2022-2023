@@ -19,14 +19,12 @@ DROP TABLE IF EXISTS post CASCADE;
 -- public contents
 DROP TABLE IF EXISTS user_vote_comment;
 DROP TABLE IF EXISTS user_vote_post;
-DROP TABLE IF EXISTS "comment";
 DROP TABLE IF EXISTS "comments";
 DROP TABLE IF EXISTS post_tag;
 DROP TABLE IF EXISTS tag;
 
 -- user groups
 DROP TABLE IF EXISTS moderator;
-DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS "users";
 DROP TABLE IF EXISTS "admin";
 
