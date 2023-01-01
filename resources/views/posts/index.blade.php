@@ -60,6 +60,16 @@
                             </p>
 
                             <p class="card-text">
+
+                                @isset($post->tags)
+                                    @foreach($post->tags as $tag)
+                                        <x-tag :tag="$tag"/>
+
+                                    @endforeach
+                                @endisset
+                            </p>
+
+                            <p class="card-text">
                                 <small class="text-muted">
                                     Created {{ Carbon::parse($post->created_at)->diffForHumans() }}.
                                     @if ($post->created_at != $post->updated_at)

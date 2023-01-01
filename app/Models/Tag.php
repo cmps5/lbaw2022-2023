@@ -1,21 +1,31 @@
 <?php
 
-namespace App\Models;
+namespace App\View\Components;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\Component;
 
-class Tag extends Model
+class Tag extends Component
 {
+    public $tag;
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct($tag)
+    {
 
-    // Don't add create and update timestamps in database.
-    public $timestamps = false;
+        $this->tag = $tag;
 
-    protected $table = 'tag';
+    }
 
-    protected $primaryKey = 'tag_id';
-
-    protected $fillable = [
-        "name", "description"
-    ];
-
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
+    {
+        return view('components.tag');
+    }
 }
