@@ -50,10 +50,10 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         $comment = Comment::find($id);
-        Comment::where('id', $id)->update([
+        Comment::where('comment_id', $id)->update([
             'content' => $request['content'],
         ]);
-        return Redirect::to('/posts/' . $comment->post->id);
+        return Redirect::to('/posts/' . $comment->post->post_id);
     }
 
     /**
@@ -85,6 +85,6 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
-        return view('posts.comments.edit', compact('comment'));
+        return view('posts.comment.edit', compact('comment'));
     }
 }
