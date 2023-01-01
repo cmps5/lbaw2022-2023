@@ -23,7 +23,7 @@
     </div>
 
     <!-- Comment owner -->
-    <div class="d-flex flex-column text-center p-2">
+    <div class="d-flex col-md-1 text-center p-2 flex-column justify-content-center">
         @if($comment->user->picture)
             <img src="{{ asset('storage/' . $comment->user->picture) }}" class="align-self-center rounded-circle"
                  width="40" height="40" />
@@ -111,8 +111,8 @@
 </div>
 @isset($comment->comments)
     @foreach($comment->comments as $reply)
-        @isset($reply->parent)
-            @if($reply->parent == $comment->id)
+        @isset($reply->parent_comment)
+            @if($reply->parent_comment == $comment->comment_id)
                 <div class="ms-5">
                     <x-comment :comment="$reply" :shift="3"/>
                 </div>
