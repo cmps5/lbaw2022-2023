@@ -23,20 +23,14 @@
                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                 @endif
             @else
-                <div class="dropdown">
-                    <a class="btn" href="#" role="button" id="showNotifications" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                        </svg>
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="showNotifications" style="overflow:scroll; height: 30rem;width: 30rem; transform: translate(-50%);">
-                        @foreach(Auth()->user()->notifications as $notification)
-                            <div class="dropdown-item" style="width: 100%">
-                                <x-notification :notification="$notification" />
-                            </div>
-                        @endforeach
-                    </div>
+                <div class="position-relative m-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+                        +99
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
                 </div>
 
                 <div class="fw-bold m-3">{{ Auth::user()->username }}</div>
@@ -53,8 +47,11 @@
                         @endif
                     </a>
 
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="transform: translate(-30%, 10%);"> <!-- That OCD pleasure -->
                         <li><a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a></li>
+                        @if(Auth::user()->moderator)
+                            <li><a class="dropdown-item" href="{{ url('reports/') }}">{{ __('Reports') }}</a></li>
+                        @endif
                         <li><a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

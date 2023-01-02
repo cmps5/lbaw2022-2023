@@ -26,30 +26,15 @@
             </div>
 
 
-            <!-- FIXME: We are already passing an array but then its necessary to check with DB -->
-            <label for="post-tags" class="form-label fw-bold">Tags</label>
-            <div class="input-group mb-3 d-flex flex-row justify-content-around" id="post-tags">
-                <div class="flex-item">
-                    <input type="checkbox" class="form-check-input" id="politics" name="tags[]">
-                    <label for="politics" class="badge rounded-pill bg-primary">Politics</label>
-                </div>
-                <div class="flex-item">
-                    <input type="checkbox" class="form-check-input" id="science" name="tags[]">
-                    <label for="science" class="badge rounded-pill bg-secondary">Science</label>
-                </div>
-                <div class="flex-item">
-                    <input type="checkbox" class="form-check-input" id="sports" name="tags[]">
-                    <label for="sports" class="badge rounded-pill bg-success">Sports</label>
-                </div>
-                <div class="flex-item">
-                    <input type="checkbox" class="form-check-input" id="economics" name="tags[]">
-                    <label for="economics" class="badge rounded-pill bg-danger">Economics</label>
-                </div>
-                <div class="flex-item">
-                    <input type="checkbox" class="form-check-input" id="lifestyle" name="tags[]">
-                    <label for="lifestyle" class="badge rounded-pill bg-warning text-dark">Lifestyle</label>
-                </div>
-            </div>
+            @isset($tags)
+                @foreach ($tags as $tag)
+                    <div class="d-flex flex-row">
+                        <label for="tag{{$tag->id}}" hidden>{{$tag->name}}</label>
+                        <input type="checkbox" class="form-check-input me-3" name="tag{{$tag->id}}">
+                        <x-tag :tag="$tag" />
+                    </div>
+                @endforeach
+            @endisset
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>
 
