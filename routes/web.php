@@ -7,13 +7,13 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UsersFollowsOnTagController;
+use App\Http\Controllers\UserFollowTagController;
 use App\Http\Controllers\FollowController;
-use App\Http\Controllers\UsersVotesOnCommentController;
-use App\Http\Controllers\UsersVotesOnPostController;
+use App\Http\Controllers\UserVoteCommentController;
+use App\Http\Controllers\UserVotePostController;
 use App\Http\Controllers\ReportController;
-use App\Models\Users_votes_on_comment;
-use App\Models\Users_votes_on_post;
+use App\Models\UserVoteComment;
+use App\Models\UserVotePost;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -64,14 +64,14 @@ Route::post('/searches', [SearchController::class, 'store'])->name('search.store
 Route::get('/searches/{search}/filter', [SearchController::class, 'filter'])->name('searches.filter');
 
 // Vote
-Route::post('/upvotePost', [UsersVotesOnPostController::class, 'upvotePost'])->name('upvotePost');
-Route::post('/downvotePost', [UsersVotesOnPostController::class, 'downvotePost'])->name('downvotePost');
-Route::post('/upvoteComment', [UsersVotesOnCommentController::class, 'upvoteComment'])->name('upvoteComment');
-Route::post('/downvoteComment', [UsersVotesOnCommentController::class, 'downvoteComment'])->name('downvoteComment');
+Route::post('/upvotePost', [UserVotePostController::class, 'upvotePost'])->name('upvotePost');
+Route::post('/downvotePost', [UserVotePostController::class, 'downvotePost'])->name('downvotePost');
+Route::post('/upvoteComment', [UserVoteCommentController::class, 'upvoteComment'])->name('upvoteComment');
+Route::post('/downvoteComment', [UserVoteCommentController::class, 'downvoteComment'])->name('downvoteComment');
 
-//Route::get('api/{user}/tags', [UserFollowsOnTagController::class, 'show'])->name('usersTags.show');
-Route::post('/api/user_tags', [UsersFollowsOnTagController::class, 'store'])->name('usersTags.store');
-Route::delete('/api/user_tags', [UsersFollowsOnTagController::class, 'destroy'])->name('usersTags.destroy');
+
+Route::post('/api/user_tags', [UserFollowTagController::class, 'store'])->name('usersTags.store');
+Route::delete('/api/user_tags', [UserFollowTagController::class, 'destroy'])->name('usersTags.destroy');
 
 Route::get('/notification/{notification}/unread', [NotificationController::class, 'unmarkRead'])->name('notification.unread');
 Route::get('/notification/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');

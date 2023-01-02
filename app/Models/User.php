@@ -104,6 +104,6 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'reporter');
     }
     public function notifications(){
-        return $this->hasMany(Notification::class)->orderByDesc('created_at');
+        return $this->hasMany(Notification::class,"user_id")->orderByDesc('time_sent');
     }
 }

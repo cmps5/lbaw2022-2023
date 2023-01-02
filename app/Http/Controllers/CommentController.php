@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class CommentController extends Controller
 {
@@ -33,13 +34,15 @@ class CommentController extends Controller
         DB::table('comments')->insert([
             'content' => $request['content'],
             'post_id' => $request['post_id'],
-            'parent_comment' => $request['parent'],
-            'user_id' => auth()->user()->user_id,
-            'time_posted' => now()
+            'parent' => $request['parent'],
+            'user_id' => auth()->user()->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
         return Redirect('/posts/' . $request['post_id'],201);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -50,10 +53,10 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         $comment = Comment::find($id);
-        Comment::where('comment_id', $id)->update([
+        Comment::where('id', $id)->update([
             'content' => $request['content'],
         ]);
-        return Redirect::to('/posts/' . $comment->post->post_id);
+        return Redirect::to('/posts/' . $comment->post->id);
     }
 
     /**
@@ -72,7 +75,7 @@ class CommentController extends Controller
             return Redirect::back()->withErrors(['destroy' => 'Your request cannot be satisfied at the moment.']);
         }
 
-        return Redirect::to('/posts/' . $post->post_id);
+        return Redirect::to('/posts/' . $post->id);
     }
 
 
@@ -85,6 +88,6 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
-        return view('posts.comment.edit', compact('comment'));
+        return view('posts.comments.edit', compact('comment'));
     }
 }
