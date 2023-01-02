@@ -72,7 +72,7 @@ class PostController extends Controller
         foreach (Tag::all() as $tag){
             $tagname = 'tag' . $tag->id;
             if($request[$tagname]) {
-                DB::table('posts_tags')->insert([
+                DB::table('post_tag')->insert([
                     'post_id' => $post->id,
                     'tag_id' => $tag->id
                 ]);
