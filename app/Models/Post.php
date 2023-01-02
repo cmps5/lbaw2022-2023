@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tag;
 
 class Post extends Model
 {
@@ -45,7 +46,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->hasMany(Tags::class);
+        return $this->hasMany(Tag::class);
     }
 
 }

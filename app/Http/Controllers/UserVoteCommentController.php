@@ -2,96 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users_votes_on_comment;
+use App\Models\UserVoteComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class UserVoteCommentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only('upvoteComment', 'downvoteComment');
+    }
+
     public function upvoteComment(request $request){
 
-        if (Users_votes_on_comment::where([['user_id', '=', auth()->user()->id], ['comment_id', '=', $request['comment_id']]])->exists()) {
+        if (UserVoteComment::where([['user_id', '=', auth()->user()->user_id], ['comment_id', '=', $request['comment_id']]])->exists()) {
             // vote found
 
-            $vote = Users_votes_on_comment::where([
-                ['user_id', '=', auth()->user()->id],
+            $vote = UserVoteComment::where([
+                ['user_id', '=', auth()->user()->user_id],
                 ['comment_id', '=', $request['comment_id']]
             ])->first();
 
-            //dd($vote);
-            if($vote['vote']){
-                Users_votes_on_comment::where([
-                    ['user_id', '=', auth()->user()->id],
+            if($vote['type_of_vote']){
+                UserVoteComment::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['comment_id', '=', $request['comment_id']]
                 ])->update([
-                    'vote' => null,
+                    'type_of_vote' => null,
                 ]);
             }
             else{
-                Users_votes_on_comment::where([
-                    ['user_id', '=', auth()->user()->id],
+                UserVoteComment::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['comment_id', '=', $request['comment_id']]
                 ])->update([
-                    'vote' => true,
+                    'type_of_vote' => true,
                 ]);
             }
 
-
-            return Redirect::to('/posts/' . $request['post_id']);
+            return redirect()->back();
         }
 
-        DB::table('users_votes_on_comments')->insert([
-            'user_id' => auth()->user()->id,
+        DB::table('user_vote_comment')->insert([
+            'user_id' => auth()->user()->user_id,
             'comment_id'=> $request['comment_id'],
-            'vote' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'type_of_vote' => true
         ]);
 
-        return Redirect::to('/posts/' . $request['post_id']);
+        return redirect()->back();
     }
 
     public function downvoteComment(request $request){
 
-        if (Users_votes_on_comment::where([['user_id', '=', auth()->user()->id], ['comment_id', '=', $request['comment_id']]])->exists()) {
+        
+        if (UserVoteComment::where([['user_id', '=', auth()->user()->user_id], ['comment_id', '=', $request['comment_id']]])->exists()) {
             // vote found
 
-            $vote = Users_votes_on_comment::where([
-                ['user_id', '=', auth()->user()->id],
+            $vote = UserVoteComment::where([
+                ['user_id', '=', auth()->user()->user_id],
                 ['comment_id', '=', $request['comment_id']]
             ])->first();
 
-            //dd($vote);
-            if($vote['vote'] == null){
-                Users_votes_on_comment::where([
-                    ['user_id', '=', auth()->user()->id],
+            if($vote['type_of_vote']){
+                UserVoteComment::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['comment_id', '=', $request['comment_id']]
                 ])->update([
-                    'vote' => false,
+                    'type_of_vote' => null,
                 ]);
             }
             else{
-                Users_votes_on_comment::where([
-                    ['user_id', '=', auth()->user()->id],
+                UserVoteComment::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['comment_id', '=', $request['comment_id']]
                 ])->update([
-                    'vote' => null,
+                    'type_of_vote' => false,
                 ]);
             }
 
-
-            return Redirect::to('/posts/' . $request['post_id']);
+            return redirect()->back();
         }
 
-        DB::table('users_votes_on_comments')->insert([
-            'user_id' => auth()->user()->id,
+        DB::table('user_vote_comment')->insert([
+            'user_id' => auth()->user()->user_id,
             'comment_id'=> $request['comment_id'],
-            'vote' => false,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'type_of_vote' => false
         ]);
 
-        return Redirect::to('/posts/' . $request['post_id']);
+        return redirect()->back();
     }
 }
