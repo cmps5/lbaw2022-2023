@@ -24,9 +24,19 @@
                     <img src="{{ asset('storage/' . $post->media) }}" class="img-fluid p-2" alt="Post's media" style="width: 10rem; height: 10rem;">
                 @endif
             </div>
-        </div>
-    </div>
 
+
+            <p class="card-text">
+                @isset($post->tags)
+                    @foreach ($post->tags as $tag)
+                        <x-tag :tag="$tag" />
+                    @endforeach
+                @endisset
+            </p>
+        </div>
+
+
+    </div>
 
 
     <!--Post owner -->

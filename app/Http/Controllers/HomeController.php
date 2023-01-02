@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Post;
 
 class HomeController extends Controller
@@ -23,8 +22,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->sortByDesc('votes');
-
-        return view('home', compact('posts'));
+        $topposts = Post::all()->sortByDesc('votes');
+        $recentposts = Post::all()->sortByDesc('created_at')->sortByDesc('votes');
+        return view('home', compact('topposts', 'recentposts'));
     }
 }
