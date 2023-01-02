@@ -29,7 +29,6 @@
     <div style="padding: 2rem;">
 
     </div>
-    @include('layouts.footer')
 </div>
 </body>
 </html>

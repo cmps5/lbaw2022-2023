@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\BlockController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\UsersFollowsOnTagController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UsersVotesOnCommentController;
 use App\Http\Controllers\UsersVotesOnPostController;
+use App\Http\Controllers\ReportController;
 use App\Models\Users_votes_on_comment;
 use App\Models\Users_votes_on_post;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +45,12 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+//Change Post Status
+Route::patch('/posts/{post}/openPost', [PostController::class, 'openPost'])->name('posts.openPost');
+Route::patch('/posts/{post}/closePost', [PostController::class, 'closePost'])->name('posts.closePost');
+Route::patch('/posts/{post}/hidePost', [PostController::class, 'hidePost'])->name('posts.hidePost');
+Route::patch('/posts/{post}/deletePost', [PostController::class, 'deletePost'])->name('posts.deletePost');
+
 // Comment
 Route::get('/comments/{comments}/edit', [CommentController::class, 'edit'])->name('comments.edit');
 Route::patch('/comments/{comments}', [CommentController::class, 'update'])->name('comments.update');
@@ -51,15 +61,28 @@ Route::delete('/comments/{comments}', [CommentController::class, 'destroy'])->na
 Route::get('/searches', [SearchController::class, 'index'])->name('search.index');
 Route::get('/searches/{search}', [SearchController::class, 'show'])->name('search.show');
 Route::post('/searches', [SearchController::class, 'store'])->name('search.store');
+Route::get('/searches/{search}/filter', [SearchController::class, 'filter'])->name('searches.filter');
 
-// Votes
-Route::post('/upvoteComment', [UserVoteCommentController::class, 'upvoteComment'])->name('upvoteComment');
-Route::post('/downvoteComment', [UserVoteCommentController::class, 'downvoteComment'])->name('downvoteComment');
-Route::post('/upvotePost', [UserVotePostController::class, 'upvotePost'])->name('upvotePost');
-Route::post('/downvotePost', [UserVotePostController::class, 'downvotePost'])->name('downvotePost');
+// Vote
+Route::post('/upvotePost', [UsersVotesOnPostController::class, 'upvotePost'])->name('upvotePost');
+Route::post('/downvotePost', [UsersVotesOnPostController::class, 'downvotePost'])->name('downvotePost');
+Route::post('/upvoteComment', [UsersVotesOnCommentController::class, 'upvoteComment'])->name('upvoteComment');
+Route::post('/downvoteComment', [UsersVotesOnCommentController::class, 'downvoteComment'])->name('downvoteComment');
+
+//Route::get('api/{user}/tags', [UserFollowsOnTagController::class, 'show'])->name('usersTags.show');
+Route::post('/api/user_tags', [UsersFollowsOnTagController::class, 'store'])->name('usersTags.store');
+Route::delete('/api/user_tags', [UsersFollowsOnTagController::class, 'destroy'])->name('usersTags.destroy');
+
+Route::get('/notification/{notification}/unread', [NotificationController::class, 'unmarkRead'])->name('notification.unread');
+Route::get('/notification/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
+
+Route::post('/api/followers', [FollowController::class, 'store'])->name('followers.store');
+Route::delete('/api/followers', [FollowController::class, 'destroy'])->name('followers.destroy');
+
+Route::post('/api/blocks', [BlockController::class, 'store'])->name('block.store');
+Route::delete('/api/blocks', [BlockController::class, 'destroy'])->name('block.destroy');
 
 // --------------------------------------------
 // Report
-Route::get('/reports', function () {
-    return view('report');
-});
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+Route::post('/reports/create', [ReportController::class, 'store'])->name('reports.store');
