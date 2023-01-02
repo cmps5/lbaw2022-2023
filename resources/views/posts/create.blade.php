@@ -48,6 +48,7 @@
                     </div>
                 @endforeach
             @endisset
+            <br>
             <button type="submit" class="btn btn-primary mt-3">Create Post</button>
         </form>
 
