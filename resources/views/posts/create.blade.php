@@ -4,6 +4,14 @@
     <div class="container"
          style="width: 50%;">
 
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Posts</li>
+                <li class="breadcrumb-item active" aria-current="page">Create Post</li>
+            </ol>
+        </nav>
+
         <h1 class="fs-1 fw-bolder mb-3">Create a new post</h1>
         <form enctype="multipart/form-data" method="post" action="{{ route('posts.store') }}">
             @csrf
@@ -29,30 +37,18 @@
                 <input type="file" class="form-control" id="post-media" name="media">
             </div>
 
+            <!-- tags -->
             <label for="post-tags" class="form-label fw-bold">Tags</label>
-            <div class="input-group mb-3 d-flex flex-row justify-content-around" id="post-tags">
-                <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="politics" name="tags[]">
-                    <label for="politics" class="form-check-label badge rounded-pill bg-primary">Politics</label>
-                </div>
-                <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="science" name="tags[]">
-                    <label for="science" class="form-check-label badge rounded-pill bg-secondary">Science</label>
-                </div>
-                <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="sports" name="tags[]">
-                    <label for="sports" class="form-check-label badge rounded-pill bg-success">Sports</label>
-                </div>
-                <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="economics" name="tags[]">
-                    <label for="economics" class="form-check-label badge rounded-pill bg-danger">Economics</label>
-                </div>
-                <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="lifestyle" name="tags[]">
-                    <label for="lifestyle" class="form-check-label badge rounded-pill bg-warning text-dark">Lifestyle</label>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Post</button>
+            @isset($tags)
+                @foreach ($tags as $tag)
+                    <div class="d-flex flex-row">
+                        <label for="tag{{$tag->id}}" hidden>{{$tag->name}}</label>
+                        <input type="checkbox" class="form-check-input me-3" name="tag{{$tag->id}}">
+                        <x-tag :tag="$tag" />
+                    </div>
+                @endforeach
+            @endisset
+            <button type="submit" class="btn btn-primary mt-3">Create Post</button>
         </form>
 
     </div>
