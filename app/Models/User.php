@@ -36,7 +36,6 @@ class User extends Authenticatable
         'password',
         'end_timeout',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -107,6 +106,4 @@ class User extends Authenticatable
     public function notifications(){
         return $this->hasMany(Notification::class)->orderByDesc('created_at');
     }
-
-
 }
