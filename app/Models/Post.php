@@ -12,7 +12,7 @@ class Post extends Model
     // Don't add create and update timestamps in database.
     public $timestamps = false;
 
-    protected $table = 'post';
+    protected $table = 'posts';
 
     protected $primaryKey = 'post_id';
 

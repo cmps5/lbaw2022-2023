@@ -1,31 +1,27 @@
 <?php
 
-namespace App\View\Components;
+namespace App\Models;
 
-use Illuminate\View\Component;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Component
+class Tag extends Model
 {
-    public $tag;
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($tag)
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function posts()
     {
-
-        $this->tag = $tag;
-
+        return $this->belongsToMany(Post::class);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function users()
     {
-        return view('components.tag');
+        return $this->belongsToMany(User::class);
     }
+
+
 }

@@ -29,27 +29,26 @@
                 <input type="file" class="form-control" id="post-media" name="media">
             </div>
 
-            <!-- FIXME: We are already passing an array but then its necessary to check with DB -->
             <label for="post-tags" class="form-label fw-bold">Tags</label>
             <div class="input-group mb-3 d-flex flex-row justify-content-around" id="post-tags">
                 <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="French Food" name="tags[]">
+                    <input type="checkbox" class="form-check-input" id="politics" name="tags[]">
                     <label for="politics" class="form-check-label badge rounded-pill bg-primary">Politics</label>
                 </div>
                 <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="Latino America Cuisine" name="tags[]">
+                    <input type="checkbox" class="form-check-input" id="science" name="tags[]">
                     <label for="science" class="form-check-label badge rounded-pill bg-secondary">Science</label>
                 </div>
                 <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="Japanese Food" name="tags[]">
+                    <input type="checkbox" class="form-check-input" id="sports" name="tags[]">
                     <label for="sports" class="form-check-label badge rounded-pill bg-success">Sports</label>
                 </div>
                 <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="USA Food" name="tags[]">
+                    <input type="checkbox" class="form-check-input" id="economics" name="tags[]">
                     <label for="economics" class="form-check-label badge rounded-pill bg-danger">Economics</label>
                 </div>
                 <div class="flex-item form-check-inline">
-                    <input type="checkbox" class="form-check-input" id="African Food" name="tags[]">
+                    <input type="checkbox" class="form-check-input" id="lifestyle" name="tags[]">
                     <label for="lifestyle" class="form-check-label badge rounded-pill bg-warning text-dark">Lifestyle</label>
                 </div>
             </div>
