@@ -2,96 +2,97 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users_votes_on_post;
+use App\Models\UserVotePost;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class UserVotePostController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only('upvotePost', 'downvotePost');
+    }
+
+
     public function upvotePost(request $request){
 
-        if (Users_votes_on_post::where([['user_id', '=', auth()->user()->id], ['post_id', '=', $request['post_id']]])->exists()) {
-            // vote found
+        if (UserVotePost::where([['user_id', '=', auth()->user()->user_id], ['post_id', '=', $request['post_id']]])->exists()) {
 
-            $vote = Users_votes_on_post::where([
-                ['user_id', '=', auth()->user()->id],
+            $vote = UserVotePost::where([
+                ['user_id', '=', auth()->user()->user_id],
                 ['post_id', '=', $request['post_id']]
             ])->first();
 
-            //dd($vote);
             if($vote['vote']){
-                Users_votes_on_post::where([
-                    ['user_id', '=', auth()->user()->id],
+                UserVotePost::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['post_id', '=', $request['post_id']]
                 ])->update([
-                    'vote' => null,
+                    'type_of_vote' => null,
                 ]);
             }
             else{
-                Users_votes_on_post::where([
-                    ['user_id', '=', auth()->user()->id],
+                UserVotePost::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['post_id', '=', $request['post_id']]
                 ])->update([
-                    'vote' => true,
+                    'type_of_vote' => true,
                 ]);
             }
 
 
-            return Redirect::to('/posts/' . $request['post_id']);
+            return redirect()->back();
         }
 
-        DB::table('users_votes_on_posts')->insert([
-            'user_id' => auth()->user()->id,
+        DB::table('user_vote_post')->insert([
+            'user_id' => auth()->user()->user_id,
             'post_id'=> $request['post_id'],
-            'vote' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'type_of_vote' => true
         ]);
 
-        return Redirect::to('/posts/' . $request['post_id']);
+        return redirect()->back();
     }
 
     public function downvotePost(request $request){
 
-        if (Users_votes_on_post::where([['user_id', '=', auth()->user()->id], ['post_id', '=', $request['post_id']]])->exists()) {
-            // vote found
+        if (UserVotePost::where([['user_id', '=', auth()->user()->user_id], ['post_id', '=', $request['post_id']]])->exists()) {
 
-            $vote = Users_votes_on_post::where([
-                ['user_id', '=', auth()->user()->id],
+            $vote = UserVotePost::where([
+                ['user_id', '=', auth()->user()->user_id],
                 ['post_id', '=', $request['post_id']]
             ])->first();
 
-            //dd($vote);
-            if($vote['vote'] == null){
-                Users_votes_on_post::where([
-                    ['user_id', '=', auth()->user()->id],
+            if($vote['vote']){
+                UserVotePost::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['post_id', '=', $request['post_id']]
                 ])->update([
-                    'vote' => false,
+                    'type_of_vote' => null,
                 ]);
             }
             else{
-                Users_votes_on_post::where([
-                    ['user_id', '=', auth()->user()->id],
+                UserVotePost::where([
+                    ['user_id', '=', auth()->user()->user_id],
                     ['post_id', '=', $request['post_id']]
                 ])->update([
-                    'vote' => null,
+                    'type_of_vote' => false,
                 ]);
             }
 
 
-            return Redirect::to('/posts/' . $request['post_id']);
+            return redirect()->back();
         }
 
-        DB::table('users_votes_on_posts')->insert([
-            'user_id' => auth()->user()->id,
+        DB::table('user_vote_post')->insert([
+            'user_id' => auth()->user()->user_id,
             'post_id'=> $request['post_id'],
-            'vote' => false,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'type_of_vote' => false
         ]);
 
-        return Redirect::to('/posts/' . $request['post_id']);
+        return redirect()->back();
     }
 }

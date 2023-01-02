@@ -4,22 +4,6 @@
     <div class="container">
         <div class="card d-flex flex-row">
 
-            <script>
-                function UpvotePost(){
-                    const request = new XMLHttpRequest();
-
-                    let votesUpdate = function() {
-                        document.getElementById("VotesPost").innerHTML =
-                            {{ $post->votes }};
-                    }
-
-                    request.open("POST", "/upvotePost");
-                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    request.onreadystatechange = votesUpdate;
-                    request.send("{{$post->id}}");
-                }
-            </script>
-
 
             <!--Post itself -->
             <div class="flex-fill">
@@ -121,21 +105,35 @@
 
             <!-- Votes -->
             <div class="d-flex flex-column justify-content-center text-center p-4">
-                <div>
+                <div><a href="{{ route('upvotePost') }}"
+                        onclick="event.preventDefault(); document.getElementById('upvotePost').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-arrow-up-circle-fill align-self-center" viewBox="0 0 16 16">
                         <path
                             d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-                    </svg>
+                    </svg></a>
                 </div>
+                <form enctype="multipart/form-data" id="upvotePost" action="{{ route('upvotePost') }}" method="POST"
+                        class="d-none">
+                        @csrf
+                        <input name="post_id" value="{{ $post->post_id }}" hidden />
+                    </form>
+
                 <div class="mt-1">{{ $post->votes }}</div>
-                <div>
+
+                <div><a href="{{ route('downvotePost') }}"
+                        onclick="event.preventDefault(); document.getElementById('downvotePost').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
                         <path
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-                    </svg>
+                    </svg></a>
                 </div>
+                <form enctype="multipart/form-data" id="downvotePost" action="{{ route('downvotePost') }}" method="POST"
+                        class="d-none">
+                        @csrf
+                        <input name="post_id" value="{{ $post->post_id }}" hidden />
+                    </form>
             </div>
         </div>
 

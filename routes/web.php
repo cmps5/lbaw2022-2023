@@ -76,6 +76,8 @@ Route::delete('/comments/{comments}', [CommentController::class, 'destroy'])->na
 // Votes
 Route::post('/upvoteComment', [UserVoteCommentController::class, 'upvoteComment'])->name('upvoteComment');
 Route::post('/downvoteComment', [UserVoteCommentController::class, 'downvoteComment'])->name('downvoteComment');
+Route::post('/upvotePost', [UserVotePostController::class, 'upvotePost'])->name('upvotePost');
+Route::post('/downvotePost', [UserVotePostController::class, 'downvotePost'])->name('downvotePost');
 
 // --------------------------------------------
 // Report
