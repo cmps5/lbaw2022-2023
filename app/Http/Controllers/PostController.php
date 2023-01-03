@@ -24,8 +24,9 @@ class PostController extends Controller
 
     public function create()
     {
-        $tags = Tag::all();
-        return view('posts.create', compact('tags'));
+        //$tags = Tag::all();
+        //return view('posts.create', compact('tags'));
+        return view('posts.create');
     }
 
     /**
@@ -69,7 +70,7 @@ class PostController extends Controller
         $data['media'] = $request['media'] ? $request['media']->store('posts', 'public') : null;
         $post = auth()->user()->posts()->create($data);
 
-        foreach (Tag::all() as $tag){
+        /*foreach (Tag::all() as $tag){
             $tagname = 'tag' . $tag->id;
             if($request[$tagname]) {
                 DB::table('post_tag')->insert([
@@ -77,9 +78,9 @@ class PostController extends Controller
                     'tag_id' => $tag->id
                 ]);
             }
-        }
+        }*/
 
-        return Redirect::to('/posts/' . $post->id);
+        return Redirect::to('/posts/' . $post->post_id);
     }
 
     /**
