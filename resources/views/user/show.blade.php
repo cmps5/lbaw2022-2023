@@ -44,28 +44,28 @@
                             @endif
 
                             <!-- actions -->
-                            @if (@isset(Auth()->user()->id) && Auth::user()->id != $user->id)
+                            @if (@isset(Auth()->user()->user_id) && Auth::user()->user_id != $user->user_id)
                                 <div class="row">
                                     <div class="d-flex gap-2 h-auto justify-content-around">
-                                        @if (Auth::user()->following()->contains($user->id))
+                                        @if (Auth::user()->following()->contains($user->user_id))
                                             <button class="flex-item fw-light h-auto btn btn-primary follow"
                                                     id="unfollow-btn" follower='{{ Auth::user()->id }}'
-                                                    followed='{{ $user->id }}'>{{ __('Unfollow') }} </button>
+                                                    followed='{{ $user->user_id }}'>{{ __('Unfollow') }} </button>
                                         @else
 
                                             <button class="flex-item fw-light h-auto btn btn-primary follow" id="follow-btn"
                                                     follower='{{ Auth::user()->id }}'
-                                                    followed='{{ $user->id }}'>{{ __('Follow') }} </button>
+                                                    followed='{{ $user->user_id }}'>{{ __('Follow') }} </button>
                                         @endif
                                         <div class="vr"></div>
-                                        @if (Auth::user()->blocking()->contains($user->id))
+                                        @if (Auth::user()->blocking()->contains($user->user_id))
                                             <button class="flex-item fw-light h-auto btn btn-danger block" id="unblock-btn"
-                                                    blocker='{{ Auth::user()->id }}' blocked='{{ $user->id }}'>
+                                                    blocker='{{ Auth::user()->id }}' blocked='{{ $user->user_id }}'>
                                                 {{ __('UnBlock') }}
                                             </button>
                                         @else
                                             <button class="flex-item fw-light h-auto btn btn-danger block" id="block-btn"
-                                                    blocker='{{ Auth::user()->id }}' blocked='{{ $user->id }}'>
+                                                    blocker='{{ Auth::user()->id }}' blocked='{{ $user->user_id }}'>
                                                 {{ __('Block') }}
                                             </button>
                                         @endif
@@ -93,7 +93,7 @@
                                                         <label for="report-content"
                                                                class="form-label fw-bold">Report</label>
                                                     </div>
-                                                    <input name="user_id" value="{{ $user->id }}" hidden />
+                                                    <input name="user_id" value="{{ $user->user_id }}" hidden />
                                                     <input name="reporter" value="{{ Auth::user()->id }}" hidden />
                                                     <button type="submit" class="btn btn-primary mx-3">Leave a
                                                         report</button>
@@ -108,7 +108,7 @@
                                 </div>
                             @else
                                 <a class="flex-item fw-light h-auto btn btn-primary" style="width: 33%;"
-                                   href="{{ route('users.edit', $user->id) }}">{{ __('Edit Profile') }}
+                                   href="{{ route('users.edit', $user->user_id) }}">{{ __('Edit Profile') }}
                                 </a>
                             @endif
                             <!-- reputation -->
@@ -124,14 +124,14 @@
 
 
                             <!-- Moderator actions -->
-                            @if (@isset(Auth()->user()->id) && (Auth::user()->moderator && Auth::user()->id != $user->id))
+                            @if (@isset(Auth()->user()->id) && (Auth::user()->moderator && Auth::user()->id != $user->user_id))
                                 <h3>
                                     MODERATOR ACTIONS
                                 </h3>
 
                                 <div class="row">
                                     <div class="d-flex gap-2 h-auto justify-content-around">
-                                        <form action="{{ route('users.extendTimeout', $user->id) }}" method="post">
+                                        <form action="{{ route('users.extendTimeout', $user->user_id) }}" method="post">
                                             @method('PATCH')
                                             @csrf
                                             <button class="flex-item fw-light h-auto btn btn-danger"
@@ -167,7 +167,7 @@
                             <div class="flex-item ml-3" id="followingSelector" onclick="showFollowing()">
                                 <div class="fw-light p-2">{{ __('Following') }}</div>
                             </div>
-                            @if (@isset(Auth()->user()->id) && Auth::user()->id == $user->id)
+                            @if (@isset(Auth()->user()->id) && Auth::user()->id == $user->user_id)
                                 <div class="flex-item ml-3" id="blockingSelector" onclick="showBlocking()">
                                     <div class="fw-light p-2">{{ __('Blocking') }}</div>
                                 </div>
