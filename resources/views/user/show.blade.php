@@ -174,6 +174,24 @@
                             @endif
                         </div>
 
+                        <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;" id="posts">
+                        
+                            <div>
+                            <!-- card -->
+                            @foreach ($user->posts as $post)
+                                <x-post-preview :post="$post" />
+                            @endforeach
+                            </div>
+
+                            <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; display:none" id="savedPosts">
+                                <!-- card -->
+                                ola
+                            </div>
+
+                            <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
+                            </div>
+                            
+                        </div>
                     </div>
 
                 </div>
@@ -181,27 +199,7 @@
 
 
 
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;" id="posts">
-                    <!-- card -->
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                </div>
-
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; display:none" id="savedPosts">
-                    <!-- card -->
-                    ola
-                </div>
-
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
-                    
-                </div>
+                
             </div>
         @endif
 
