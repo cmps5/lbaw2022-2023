@@ -145,7 +145,7 @@ class PostController extends Controller
             return Redirect::back()->withErrors(['destroy' => 'Your request cannot be satisfied at the moment.']);
         }
 
-        return Redirect(RouteServiceProvider::HOME);
+        return Redirect("/");
     }
 
     public function closePost($id){
