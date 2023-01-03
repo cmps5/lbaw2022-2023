@@ -160,8 +160,6 @@
                                                           style="height: 5rem; width: 29rem;"></textarea>
                                                 <label for="report-content" class="form-label fw-bold">Report</label>
                                             </div>
-                                            <input name="post_id" value="{{ $post->id }}" hidden />
-                                            <input name="reporter" value="{{ Auth::user()->id}}" hidden />
                                             <button type="submit" class="btn btn-primary mx-3">Leave a report</button>
                                         </form>
                                     </div>
