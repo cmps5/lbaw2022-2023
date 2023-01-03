@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function searches()
     {
-        return $this->hasMany(Search::class);
+        return $this->hasMany(Search::class, "user_id");
     }
 
     public function moderator()

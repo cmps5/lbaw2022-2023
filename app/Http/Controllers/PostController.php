@@ -121,7 +121,7 @@ class PostController extends Controller
             $tagname = 'tag' . $tag->id;
             if($request[$tagname]) {
                 DB::table('posts_tags')->insert([
-                    'post_id' => $post->id,
+                    'post_id' => $id,
                     'tag_id' => $tag->id
                 ]);
             }

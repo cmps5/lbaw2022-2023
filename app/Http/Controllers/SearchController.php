@@ -45,7 +45,6 @@ class SearchController extends Controller
             'content' => ['required', 'string'],
         ]);
 
-        auth()->user()->searches()->create($data);
 
         return Redirect('searches/' . $data['content'],302);
     }
