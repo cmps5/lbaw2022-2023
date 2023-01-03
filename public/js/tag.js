@@ -1,22 +1,36 @@
-function appearFollowTag(name) {
-    var followIcon = document.getElementById('follow' + name);
-    followIcon.style.display= "unset";
-    followIcon.style.color = "black";
+function appearPlus(name) {
+    var operationIcon = document.getElementById('follow' + name);
+
+    if(operationIcon == null) operationIcon = document.getElementById('unfollow' + name);
+
+    operationIcon.style.display= "unset";
+    operationIcon.style.color = "black";
 }
 
-function disappearFollowTag(name) {
-    var followIcon = document.getElementById('follow' + name);
-    followIcon.style.display= "none";
+function disappearPlus(name) {
+    var operationIcon = document.getElementById('follow' + name);
+
+    if(operationIcon == null) operationIcon = document.getElementById('unfollow' + name);
+
+    operationIcon.style.display= "none";
 }
 
-function followTagPressed(name){
-    var followIcon = document.getElementById('follow' + name);
-    followIcon.style.backgroundColor = "black";
-    followIcon.style.color = "white";
+function pressedPlus(name){
+    var operationIcon = document.getElementById('follow' + name);
+
+    if(operationIcon == null) operationIcon = document.getElementById('unfollow' + name);
+
+    operationIcon.style.backgroundColor = "black";
+    operationIcon.style.color = "white";
 }
 
-function followTagUnpressed(name){
-    var followIcon = document.getElementById('follow' + name);
-    followIcon.style.backgroundColor = "azure";
-    followIcon.style.color = "black";
+function unpressedPlus(name){
+    var operationIcon = document.getElementById('follow' + name);
+
+    if(operationIcon == null) operationIcon = document.getElementById('unfollow' + name);
+
+    operationIcon.style.backgroundColor = "azure";
+    operationIcon.style.color = "black";
 }
+
+

@@ -24,11 +24,38 @@
                     <img src="{{ asset('storage/' . $post->media) }}" class="img-fluid p-2" alt="Post's media" style="width: 10rem; height: 10rem;">
                 @endif
             </div>
+
+
+            <p class="card-text">
+                @isset($post->tags)
+                    @foreach ($post->tags as $tag)
+                        <x-tag :tag="$tag" />
+                    @endforeach
+                @endisset
+            </p>
+        </div>
+
+
+    </div>
+
+
+    <!--Post owner -->
+    <div class="d-flex col-md-1 text-center p-2 flex-column justify-content-center" href="{{ url('users/' . $post->user->id) }}" style="width: 12.499999995%">
+        <div class="d-flex flex-column text-center p-2">
+            @if ($post->user->picture)
+                <img src="{{ asset('storage/' . $post->user->picture) }}" alt="Post author profile picture"
+                     class="align-self-center rounded-circle" width="40" height="40"/>
+            @else
+                <img src="{{ url('images/default.png') }}" alt="Post author profile picture"
+                     class="align-self-center rounded-circle" width="40" height="40"/>
+            @endif
+            <small>{{ $post->user->username }}</small>
         </div>
     </div>
 
 
 
+<<<<<<< HEAD
     <!--Post owner -->
     <div class="d-flex col-md-1 text-center p-2 flex-column justify-content-center" style="width: 12.499999995%">
         @if ($post->user->picture)
@@ -41,6 +68,8 @@
         <p><small>{{ $post->user->username }}</small></p>
     </div>
 
+=======
+>>>>>>> 949c0d1b69f23bcb90906a6949a25ca80f6584e5
     <!-- Votes -->
     <div class="d-flex flex-column justify-content-center text-center p-4">
                 <div><a href="{{ route('upvotePost') }}"

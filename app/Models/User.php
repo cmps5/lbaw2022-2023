@@ -36,7 +36,6 @@ class User extends Authenticatable
         'password',
         'end_timeout',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -48,12 +47,12 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class, 'post_id');
+        return $this->hasMany(Post::class, 'user_id');
     }
 
     public function searches()
     {
-        return $this->hasMany(Search::class);
+        return $this->hasMany(Search::class, "user_id");
     }
 
     public function moderator()
@@ -105,8 +104,6 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'reporter');
     }
     public function notifications(){
-        return $this->hasMany(Notification::class)->orderByDesc('created_at');
+        return $this->hasMany(Notification::class,"user_id")->orderByDesc('time_sent');
     }
-
-
 }

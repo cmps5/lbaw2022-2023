@@ -5,6 +5,7 @@
     <div class="container">
 
 
+
         @if (Session::has('success'))
             <div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>
         @endif
@@ -175,34 +176,6 @@
                         </div>
 
                     </div>
-<<<<<<< HEAD
-
-                </div>
-
-
-
-
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;" id="posts">
-                    <!-- card -->
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                    @foreach ($user->posts as $post)
-                        <x-post-preview :post="$post" />
-                    @endforeach
-                </div>
-
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; display:none" id="savedPosts">
-                    <!-- card -->
-                    ola
-                </div>
-
-                <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
-                    
-=======
                     <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; width: auto;" id="posts">
                         <!-- card -->
                         @foreach ($user->posts as $post)
@@ -252,7 +225,6 @@
                         @endif
                     </div>
 
->>>>>>> 949c0d1b69f23bcb90906a6949a25ca80f6584e5
                 </div>
             </div>
         @endif
@@ -260,4 +232,3 @@
     </div>
 
 @endsection
-

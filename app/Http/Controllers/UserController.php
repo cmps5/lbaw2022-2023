@@ -99,6 +99,7 @@ class UserController extends Controller
         return view('auth.passwords.change');
     }
 
+
     public function commitChangePassword(Request $request)
     {
         $request->validate([
