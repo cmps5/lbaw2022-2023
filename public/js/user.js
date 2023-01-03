@@ -12,7 +12,6 @@ let blockingSelector = document.getElementById('blockingSelector');
 
 
 function showUserTags() {
-
     posts.style.display = "none";
     tags.style.display = "unset";
     followers.style.display = "none";
@@ -41,6 +40,7 @@ function showUserPosts() {
 }
 
 function showFollowers() {
+    console.log("opa")
     posts.style.display = "none";
     tags.style.display = "none";
     followers.style.display = "unset";
