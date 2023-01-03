@@ -53,16 +53,8 @@
                         @endif
                     </a>
 
-<<<<<<< HEAD
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="{{ url('users/' . Auth::user()->user_id) }}">{{ __('Profile') }}</a></li>
-=======
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="transform: translate(-30%, 10%);"> <!-- That OCD pleasure -->
-                        <li><a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a></li>
-                        @if(Auth::user()->moderator)
-                            <li><a class="dropdown-item" href="{{ url('reports/') }}">{{ __('Reports') }}</a></li>
-                        @endif
->>>>>>> 949c0d1b69f23bcb90906a6949a25ca80f6584e5
                         <li><a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

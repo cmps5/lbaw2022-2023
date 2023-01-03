@@ -175,7 +175,6 @@
                         </div>
 
                     </div>
-<<<<<<< HEAD
 
                 </div>
 
@@ -202,57 +201,6 @@
 
                 <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
                     
-=======
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; width: auto;" id="posts">
-                        <!-- card -->
-                        @foreach ($user->posts as $post)
-                            <x-post-preview :post="$post" />
-                        @endforeach
-                    </div>
-
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px; display:none" id="savedPosts">
-                        <!-- card -->
-                        Ups! Looks like you don't have any post saved at this moment.
-                    </div>
-
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
-                        <!-- card -->
-                        @if ($user->tags())
-                            @foreach ($user->tags() as $tag)
-                                <x-tag :tag="$tag" />
-                            @endforeach
-                        @endif
-                    </div>
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="followers">
-
-                        @if ($user->followers())
-                            @foreach ($user->followers() as $follower)
-                                <x-user-preview :user="$follower" />
-                            @endforeach
-                        @endif
-
-
-                    </div>
-
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="following">
-
-                        @if ($user->following())
-                            @foreach ($user->following() as $followed)
-                                <x-user-preview :user="$followed" />
-                            @endforeach
-                        @endif
-                    </div>
-
-                    <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="blocking">
-
-                        @if ($user->blocking())
-                            @foreach ($user->blocking() as $blocked)
-                                <x-user-preview :user="$blocked" />
-                            @endforeach
-                        @endif
-                    </div>
-
->>>>>>> 949c0d1b69f23bcb90906a6949a25ca80f6584e5
                 </div>
             </div>
         @endif
