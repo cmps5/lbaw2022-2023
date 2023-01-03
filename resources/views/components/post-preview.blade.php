@@ -38,7 +38,7 @@
             <img src="{{ url('images/default.png') }}" alt="Post author profile picture"
                  class="align-self-center rounded-circle" width="40" height="40"/>
         @endif
-        <p><small>{{ $post->post_id }}</small></p>
+        <p><small>{{ $post->user->username }}</small></p>
     </div>
 
     <!-- Votes -->
