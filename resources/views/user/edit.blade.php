@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container d-flex flex-column gap-3" style="width: 50%">
-        <form method="POST" enctype="multipart/form-data" action="{{ route('users.update', $user->id) }}" class="flex-item">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('users.update', $user->user_id) }}" class="flex-item">
             @csrf
             @method('PATCH')
 

@@ -52,15 +52,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = User::where('user_id', $id)->first();
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('user')->ignore($id)],
-            'email' => ['required', 'email', 'max:255', Rule::unique('user')->ignore($id)],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->user_id, "user_id")],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->user_id, "user_id")],
             'bio' => ['nullable', 'string', 'max:255'],
             'picture' => ['nullable', 'image'],
         ]);
 
-        $user = User::where('id', $id)->first();
+        
         $userPicturePath = 'storage/' . $user->picture;
 
         if ($request->hasFile('picture'))
@@ -79,7 +80,7 @@ class UserController extends Controller
             'media' => $request['picture'] ? $request['picture']->store('profiles', 'public') : null,
         ]);
 
-        return Redirect::to('user/'. $id);
+        return Redirect::to('users/'. $id);
     }
 
     /**
