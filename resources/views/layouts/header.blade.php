@@ -48,7 +48,7 @@
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="{{ url('users/' . Auth::user()->id) }}">{{ __('Profile') }}</a></li>
+                        <li><a class="dropdown-item" href="{{ url('users/' . Auth::user()->user_id) }}">{{ __('Profile') }}</a></li>
                         <li><a class="dropdown-item" href="{{ url('posts/create') }}">{{ __('Create Post') }}</a></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

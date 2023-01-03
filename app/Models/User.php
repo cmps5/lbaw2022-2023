@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'post_id');
     }
 
     public function searches()
@@ -63,18 +63,18 @@ class User extends Authenticatable
 
     public function tags()
     {
-        $tags = $this->belongsToMany(Tag::class, "users_follows_on_tags")->get();
+        $tags = $this->belongsToMany(Tag::class, "user_follow_tag")->get();
 
         return $tags;
     }
     public function votes_on_posts()
     {
-        return $this->hasMany(Users_votes_on_post::class);
+        return $this->hasMany(UserVoteComment::class);
     }
 
     public function votes_on_comments()
     {
-        return $this->hasMany(Users_votes_on_comment::class);
+        return $this->hasMany(UserVotePost::class);
     }
 
 

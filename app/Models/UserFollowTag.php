@@ -11,6 +11,7 @@ class UserFollowTag extends Model
     public $timestamps = false;
 
     protected $table = 'user_follow_tag';
+    protected $primaryKey = 'tag_id';
 
     protected $fillable = [
         "post_id", "tag_id"

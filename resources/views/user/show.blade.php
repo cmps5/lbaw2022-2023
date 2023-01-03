@@ -125,12 +125,7 @@
                 </div>
 
                 <div class="row flex-grow-1 m-3" style="overflow:scroll; height: 500px;display:none" id="tags">
-                    <!-- card -->
-                    @isset($user->tags)
-                        @foreach($user->tags as $tag)
-                            <x-tag :tag="$tag"/>
-                        @endforeach
-                    @endisset
+                    
                 </div>
 
 
