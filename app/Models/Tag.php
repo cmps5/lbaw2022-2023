@@ -9,6 +9,10 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $table = 'tag';
+
+    protected $primaryKey = 'tag_id';
+
     protected $fillable = [
         'name',
         'description',

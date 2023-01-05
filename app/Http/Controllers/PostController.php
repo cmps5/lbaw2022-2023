@@ -93,7 +93,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $tags = Tag::all();
-        return view('posts.edit', compact('post', 'tags'));
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -106,12 +106,12 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
-        $post->tags()->delete();
+        //$post->tags()->delete();
 
         if (File::exists('storage/' . $post['media']))
             File::delete('storage/' . $post['media']);
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'title' => $request['title'],
             'content' => $request['content'],
             'media' => $request['media'] ? $request['media']->store('posts', 'public') : null,
@@ -150,7 +150,7 @@ class PostController extends Controller
 
     public function closePost($id){
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'status' => 'closed',
         ]);
 
@@ -158,7 +158,7 @@ class PostController extends Controller
     }
     public function hidePost($id){
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'status' => 'hidden',
         ]);
 
@@ -166,7 +166,7 @@ class PostController extends Controller
     }
     public function deletePost($id){
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'status' => 'deleted',
         ]);
 
@@ -174,7 +174,7 @@ class PostController extends Controller
     }
     public function openPost($id){
 
-        Post::where('id', $id)->update([
+        Post::where('post_id', $id)->update([
             'status' => 'open',
         ]);
 
