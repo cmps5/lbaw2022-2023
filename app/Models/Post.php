@@ -21,7 +21,8 @@ class Post extends Model
         'title',
         'content',
         'media',
-        'status'
+        'status',
+        'time_posted'
     ];
 
     public function user()

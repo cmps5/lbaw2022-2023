@@ -14,7 +14,7 @@ class Comment extends Model
     protected $primaryKey = 'comment_id';
 
     protected $fillable = [
-        "comment_id", "content", "user_id", "post_id", "parent_comment"
+        "comment_id", "content", "user_id", "post_id", "parent_comment", "time_posted"
     ];
 
 

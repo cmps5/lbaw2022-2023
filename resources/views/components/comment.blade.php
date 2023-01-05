@@ -111,10 +111,7 @@
 
                         <p class="card-text">
                             <small class="text-muted">
-                                Created {{ Carbon::parse($comment->created_at)->diffForHumans() }}.
-                                @if ($comment->created_at != $comment->updated_at)
-                                    Last updated {{ Carbon::parse($comment->updated_at)->diffForHumans() }}
-                                @endif
+                                Created {{ Carbon::parse($comment->time_posted)->diffForHumans() }}
                             </small>
                         </p>
                     </div>

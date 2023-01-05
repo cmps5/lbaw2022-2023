@@ -13,10 +13,7 @@
                     <p class="card-text">{{ $post->content }}</p>
                     <p class="card-text">
                         <small class="text-muted">
-                            Created {{ Carbon::parse($post->created_at)->diffForHumans() }}.
-                            @if ($post->created_at != $post->updated_at)
-                                Last updated {{ Carbon::parse($post->updated_at)->diffForHumans() }}
-                            @endif
+                            Created {{ Carbon::parse($post->time_posted)->diffForHumans() }}
                         </small>
                     </p>
                 </div>
