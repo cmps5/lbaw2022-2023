@@ -27,7 +27,7 @@
                              aria-labelledby="changeStatus" data-bs-parent="#help">
                             <div class="accordion-body d-flex flex-row gap-2">
 
-                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.openPost', $post->id) }}"
+                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.openPost', $post->post_id) }}"
                                       method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -36,7 +36,7 @@
                                     </button>
                                 </form>
 
-                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.closePost', $post->id) }}"
+                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.closePost', $post->post_id) }}"
                                       method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -45,7 +45,7 @@
                                     </button>
                                 </form>
 
-                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.hidePost', $post->id) }}"
+                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.hidePost', $post->post_id) }}"
                                       method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -54,7 +54,7 @@
                                     </button>
                                 </form>
 
-                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.deletePost', $post->id) }}"
+                                <form enctype="multipart/form-data" id="closePost" action="{{ route('posts.deletePost', $post->post_id) }}"
                                       method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -130,7 +130,7 @@
                                                           style="height: 5rem; width: 29rem;"></textarea>
                                                 <label for="comment-content" class="form-label fw-bold">Comment</label>
                                             </div>
-                                            <input name="post_id" value="{{ $post->id }}" hidden />
+                                            <input name="post_id" value="{{ $post->post_id }}" hidden />
                                             <button type="submit" class="btn btn-primary mx-3">Leave a comment</button>
                                         </form>
                                     </div>
